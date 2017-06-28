@@ -1,0 +1,11 @@
+{#<div class="section-content title-size-{{ block.blockDigitSize }} icons-{{ block.blockShowIcons }} icon-size-{{ block.blockIconSize }} i-center-{{ block.blockCenter }} ">#}
+<div class="section-content title-size-{{ block.blockDigitSize }}">
+
+    <div class="grid-3_xs-1_sm-1_md-2-lg-3-equalHeight">
+        {% for item in infogs %}
+            <div class="col">
+                {% include "infogs/_item.html" %}
+            </div>
+        {% endfor %}
+    </div>
+</div>

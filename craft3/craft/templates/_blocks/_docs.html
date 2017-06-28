@@ -1,0 +1,41 @@
+{% if block['isSwiper'] is defined and block.isSwiper == 1 and docs|length>3 %}
+    {% set classes = ' swiper--cards ' %}
+    {% set arrows = 1 %}
+    {% set centered = 1 %}
+    {% set loop = 'false' %}
+    {% set swiperData = docs %}
+    {% set cardTemplate = 'docs/_card.html' %}
+    {% set spb ="
+            spaceBetween: 0,
+            slidesPerView: 4,
+            slidesPerGroup:4,
+            centeredSlides:true,
+            breakpoints: {
+            640: {
+            slidesPerView: 1,
+            slidesPerGroup:1,
+            },
+            920: {
+            slidesPerView: 2,
+            slidesPerGroup:2,
+            },
+            1400: {
+            slidesPerView: 3,
+            slidesPerGroup:3,
+            },
+            1600: {
+            slidesPerView: 4,
+            slidesPerGroup:4,
+            },
+            1800: {
+            slidesPerView: 4,
+            slidesPerGroup:4,
+            }
+            }" %}
+    {% include "_swiper/_swiper.html" %}
+
+{% else %}
+    {% set templ = "docs/" ~ tmpl %}
+    {% include templ %}
+{% endif %}
+

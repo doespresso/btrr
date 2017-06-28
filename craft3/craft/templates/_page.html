@@ -1,0 +1,80 @@
+{% spaceless %}
+{% extends "_var.html" %}
+{#{% cache globally %}#}
+      {% block all %}
+
+
+
+          <!DOCTYPE html>
+          <html>
+          <head>
+              {% include 'inc/_head' %}
+              {% include 'inc/_meta' %}
+              {#{% block scripted %}#}
+              {#{% endblock %}#}
+              {% include "inc/_md-themes.html" %}
+              {#{{ getFootHtml() }}#}
+          </head>
+
+          <body>
+
+          <div id="app" v-cloak>
+              <div class="app-content article-in-list">
+
+
+                  {{ include ("menus/_sidenav_list-collapse.html") }}
+                  {{ include ("form/_feedback-side.html") }}
+                  {{ include ("inc/_searchbar.html") }}
+
+
+                  <div v-if="!loaded" style="position:fixed; left:0; top:0; right:0; bottom:0; background-color: white; z-index:1000;"></div>
+
+
+                  <transition appear name="fade">
+                      {{ include ("header/_header.html") }}
+                  </transition>
+
+
+                  {% set left_column=true %}
+
+                  {##}
+
+                  {#<transition appear name="liftup">#}
+                  <div class="page-content">
+                      {% block content %}
+                      {% endblock %}
+                  </div>
+                  {#</transition>#}
+
+                  <div class="page-pager">
+                      {% block pager %}
+                      {% endblock %}
+                  </div>
+
+                  {% if cot != 'category' and not ishomepage %}
+                      <aside class="aside-bottom">
+                          {% set matrix = globalBottom.bMatrix %}
+                          {{ include ("matrix/_matrix.html") }}
+                      </aside>
+                  {% endif %}
+
+
+                  {##}
+
+
+                  {% include 'inc/_footer' %}
+
+
+              </div>
+
+              {#{% include('inc/_speed-dial.html') %}#}
+
+          </div>
+          {% include 'inc/_scripts' %}
+          </body>
+          </html>
+
+      {% endblock %}
+{#{% endcache %}#}
+{% endspaceless %}
+

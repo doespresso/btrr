@@ -1,0 +1,17 @@
+
+.filter-persons {
+  //background-color: #f2f2f2;
+  padding-top: 40px;
+  [class*="col"] {
+    padding-bottom: 0;
+  }
+}
+
+.filtered {
+  [class*="grid-"][class*="-equalHeight"] > [class*="col"][in-filter="true"], .md-card[in-filter="true"] {
+    display: none;
+    &.found {
+      display: flex;
+    }
+  }
+}

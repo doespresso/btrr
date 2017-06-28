@@ -1,0 +1,23 @@
+.md-sidenav-content {
+  overflow: hidden;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.main-sidebar-links,.sidebar-content {
+  flex: 1;
+  overflow: auto;
+}
+
+.sidebar-content{
+  padding:20px;
+}
+
+.md-sidenav-content {
+  .md-list-item, .md-list-item-container {
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+
+

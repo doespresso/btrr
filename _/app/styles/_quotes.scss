@@ -1,0 +1,43 @@
+.quote {
+  opacity:0;
+  transition:opacity 1s ease-in-out;
+  margin: 0;
+  padding: 40px 20px;
+  .swiper-slide-active &{
+    opacity:1;
+  }
+  .quote-text {
+    font-family: Georgia,"Times New Roman";
+    border-left:3px solid #eee;
+    padding:0 24px;
+    position:relative;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 2em;
+    margin-bottom: 20px;
+    &:before{
+      //content:'"';
+      //font-family:times;
+      //position:absolute;
+      //left:0px;
+      //top:-20px;
+      //color:rgba(#000,0.075);
+      //z-index:-1;
+      //font-size:200px;
+      //line-height:1;
+    }
+  }
+  .author {
+    font-size:13px;
+    display: block;
+    font-weight: 400;
+    padding-left:27px;
+  }
+  @include layout-small-and-up {
+    .quote-text {
+      font-size: 18px;
+    }
+    max-width: 740px;
+    margin: 20px auto 0 auto;
+  }
+}

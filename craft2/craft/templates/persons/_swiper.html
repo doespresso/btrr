@@ -1,0 +1,19 @@
+<swiper class="swiper--cards section-content arrows--t-25p arrows-1" :options="{
+'roundLengths': true,
+'slidesPerView':'auto',
+'centeredSlides':true,
+pagination: '.swiper-pagination',
+paginationClickable: true,
+nextButton: '.swiper-button-next',
+prevButton: '.swiper-button-prev',}">
+    {% for item in persons %}
+        <swiper-slide>
+            <div class="col">
+            {% include "persons/_card.html" %}
+            </div>
+        </swiper-slide>
+    {% endfor %}
+    <div class="swiper-pagination" slot="pagination"></div>
+    <div class="swiper-button-prev" slot="button-prev"><md-button class="md-icon-button t-color"><md-icon>arrow_back</md-icon></md-button></div>
+    <div class="swiper-button-next" slot="button-next"><md-button class="md-icon-button t-color"><md-icon>arrow_forward</md-icon></md-button></div>
+</swiper>

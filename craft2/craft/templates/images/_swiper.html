@@ -1,0 +1,8 @@
+<swiper class="swiper--images" :options="{effect:'fade',autoplay:5000,speed:1000,loop:true,pagination: '.swiper-pagination', paginationClickable:true}">
+    {% for img in images %}
+        <swiper-slide>
+            {% include "images/_image.html" %}
+        </swiper-slide>
+    {% endfor %}
+    <div class="swiper-pagination" slot="pagination"></div>
+</swiper>

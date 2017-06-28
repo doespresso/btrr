@@ -1,0 +1,39 @@
+{% extends "_page.html" %}
+
+{% block content %}
+    {% cache %}
+    <section class="section">
+        <div class="ctr section-content">
+            <div class="grid">
+                <div class="col-4_xs-12_sm-5">
+                    <div class="wrapper">
+                        {% set person = entry %}
+                        {% include "persons/_person-card.html" %}
+                    </div>
+                </div>
+                <div class="col-8_xs-12_sm-7">
+                    <div class="wrapper">
+                        <md-tabs class="md-transparent no-h-p">
+                            {% if entry.personBio|length %}
+                                <md-tab id="p_bio" md-label="{{ 'Biography' | t }}">
+                                    <div class="html-content person-bio m-t-20">{{ entry.personBio }}</div>
+                                </md-tab>
+                            {% endif %}
+                            {% if entry.relatedServices|length %}
+                                <md-tab id="p_services" md-label="{{ 'Services' | t }}">
+                                    {{ include ("lists/_list-simple.html",{'items':entry.relatedServices.level(1,2),'classes':'md-medium md-inline','links':true, 'divider':true}) }}
+                                </md-tab>
+                            {% endif %}
+                            {% if entry.relatedBranches|length %}
+                                <md-tab id="p_branches" md-label="{{ 'Industries' | t }}">
+                                    {{ include ("lists/_list-simple.html",{'items':entry.relatedBranches,'classes':'md-medium md-inline','links':true, 'divider':true}) }}
+                                </md-tab>
+                            {% endif %}
+                        </md-tabs>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endcache %}
+{% endblock %}

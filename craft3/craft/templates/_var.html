@@ -1,0 +1,376 @@
+
+{% cache globally using key craft.request.path %}
+
+    {% set allServices = craft.entries.section('services').level(1) %}
+    {% set allBranches = craft.entries.section('branches').level(1) %}
+
+    {% set homepage = craft.entries.slug('homepage')[0] %}
+    {% set ishomepage = entry is defined and entry.section == 'homepage' %}
+
+{#breadcrumbs#}
+{#breadcrumbs#}
+{#breadcrumbs#}
+{#breadcrumbs#}
+{#breadcrumbs#}
+
+{% import "menus/_macros-link.html" as link %}
+
+{% set breadcrumbs = [] %}
+{% set snav = [] %}
+{% set cnav = [] %}
+{% set innerChild = false %}
+{% set currentCurrent = null %}
+
+{% if not ishomepage %}
+    {% if entry is defined %}
+        {% set current = entry %}
+        {% if current.type == 'typePerson' or current.type == 'typePublication' %}
+
+            {% set innerChild = true %}
+
+            {% set breadcrumbs = breadcrumbs|merge([{'title':link.title(current),'url':link.url(current)}]) %}
+
+            {% if current.type == 'typePerson' %}
+                {% set currentParent = craft.entries.section('pages').relatedTo(current.personStatus[0]).first() %}
+            {% elseif current.type == 'typePublication' %}
+                {% set currentParent = craft.entries.section('pages').relatedTo(current.publicationCategory[0]).first() %}
+            {% endif %}
+
+            {% if currentParent %}
+                {% set breadcrumbs = breadcrumbs|merge([{'title':link.title(currentParent),'url':link.url(currentParent)}]) %}
+                {% if currentParent.level>1 and currentParent.parent is defined %}
+                    {% set currentParentParent = currentParent.parent %}
+                    {% set breadcrumbs = breadcrumbs|merge([{'title':link.title(currentParentParent),'url':link.url(currentParentParent)}]) %}
+                {% endif %}
+                {% set snav = currentParent.children %}
+                {% set cnav = snav %}
+            {% endif %}
+
+        {% elseif current.type == 'typeService' or current.type == 'typeBranch' %}
+
+            {% set innerChild = true %}
+
+            {% set breadcrumbs = breadcrumbs|merge([{'title':link.title(current),'url':link.url(current)}]) %}
+
+            {% if current.type == 'typeService' %}
+                {% set currentParent = craft.entries.section('pages').mShowServices(1).first() %}
+            {% elseif current.type == 'typeBranch' %}
+                {% set currentParent = craft.entries.section('pages').mShowBranches(1).first() %}
+            {% endif %}
+
+            {% if currentParent %}
+                {% set breadcrumbs = breadcrumbs|merge([{'title':link.title(currentParent),'url':link.url(currentParent)}]) %}
+                {% if currentParent.level>1 and currentParent.parent is defined %}
+                    {% set currentParentParent = currentParent.parent %}
+                    {% set breadcrumbs = breadcrumbs|merge([{'title':link.title(currentParentParent),'url':link.url(currentParentParent)}]) %}
+                {% endif %}
+            {% endif %}
+
+        {% else %}
+
+            {% set breadcrumbs = breadcrumbs|merge([{'title':link.title(current),'url':link.url(current)}]) %}
+            {% set currentCurrent = current %}
+            {% set cnav = currentCurrent.children %}
+            {% if currentCurrent.level>1 and currentCurrent.parent is defined %}
+                {% set currentParent = currentCurrent.parent %}
+                {% set snav = currentParent.children %}
+                {% set breadcrumbs = breadcrumbs|merge([{'title':link.title(currentParent),'url':link.url(currentParent)}]) %}
+                {% if currentParent.level>1 and currentParent.parent is defined %}
+                    {% set currentParentParent = currentParent.parent %}
+                    {% set breadcrumbs = breadcrumbs|merge([{'title':link.title(currentParentParent),'url':link.url(currentParentParent)}]) %}
+                {% endif %}
+            {% endif %}
+
+        {% endif %}
+
+    {% elseif category is defined %}
+
+        {% set current = category %}
+        {% set currentCurrent = craft.entries.section('pages').relatedTo(current).first() %}
+        {% set cnav = currentCurrent.children %}
+        {% set breadcrumbs = breadcrumbs|merge([{'title':link.title(currentCurrent),'url':link.url(currentCurrent)}]) %}
+        {% if currentCurrent.level>1 and currentCurrent.parent is defined %}
+            {% set currentParent = currentCurrent.parent %}
+            {% set snav = currentParent.children %}
+            {% set breadcrumbs = breadcrumbs|merge([{'title':link.title(currentParent),'url':link.url(currentParent)}]) %}
+            {% if currentParent.level>1 and currentParent.parent is defined %}
+                {% set currentParentParent = currentParent.parent %}
+                {% set breadcrumbs = breadcrumbs|merge([{'title':link.title(currentParentParent),'url':link.url(currentParentParent)}]) %}
+            {% endif %}
+        {% endif %}
+
+    {% endif %}
+
+    {% if breadcrumbs|length>0 %}
+        {% set backNav %}
+            <div id="back-nav">
+                <md-menu md-size="6" md-disabled="true">
+                    <md-button class="md-icon-button" md-menu-trigger>
+                        <md-icon class="big-icon">arrow_back</md-icon>
+                    </md-button>
+                    <md-menu-content class="back-nav">
+                        <md-menu-item href="{{ siteUrl }}">
+                            <md-icon>home</md-icon>
+                            <span>{{ 'Homepage'|t }}</span>
+                        </md-menu-item>
+                        {% for item in breadcrumbs | reverse %}
+                            {% if not loop.last %}
+                                <md-menu-item href="{{ item.url }}">
+                                    <md-icon>chevron_left</md-icon>
+                                    <span>{{ item.title }}</span>
+                                </md-menu-item>
+                            {% endif %}
+                        {% endfor %}
+                    </md-menu-content>
+                </md-menu>
+            </div>
+        {% endset %}
+    {% endif %}
+{% else %}
+    homepage
+{% endif %}
+
+{#breadcrumbs#}
+{#breadcrumbs#}
+{#breadcrumbs#}
+{#breadcrumbs#}
+{#breadcrumbs#}
+
+
+
+
+    {% set headerTitle =  siteName %}
+
+
+    {% set gDes = globalDesign %}
+    {% set headerTheme = 'ct' ~ gDes.styleThemeObject[0].id %}
+    {% set headerHeight = gDes.styleHeight %}
+    {% set headerIcon = gDes.styleIcon %}
+    {% set headerIconAlign = gDes.styleIconAlign %}
+    {% set headerIconAlignV = gDes.styleIconAlignV %}
+    {% set headerIconSize = gDes.styleIconSize %}
+    {% set headerIconAnimation = gDes.styleIconAnimation %}
+    {% set headerIconColor = gDes.styleIconColor %}
+    {% set headerIconLine = gDes.styleIconLine %}
+    
+
+    {% set hBanners = false %}
+    {% set nox2 = false %}
+    {% set hideBottom = false %}
+    {% set headerThemeFull = 'md-theme-' ~ headerTheme %}
+
+
+
+
+
+    {% if category is defined %}
+
+        {% set cot = 'category' %}
+        {% set hideDate= 0 %}
+        {% set hideShort= 0 %}
+        {% set current = category %}
+        {% set currentType = current.group.handle %}
+        {% set headerTitle =  current.title %}
+
+
+        {% if current.styleThemeObject|length %}
+            {% set headerTheme = 'ct' ~ current.styleThemeObject[0].id %}
+            {% set headerThemeFull = 'md-theme-' ~ headerTheme %}
+        {% endif %}
+        {% if current.styleHeight is not empty %}
+            {% set headerHeight = current.styleHeight %}
+        {% endif %}
+        {% if current.styleIcon %}
+            {% set headerIcon = current.styleIcon %}
+        {% endif %}
+        {% if current.styleIconAlign is not empty %}
+            {% set headerIconAlign = current.styleIconAlign %}
+        {% endif %}
+        {% if current.styleIconAlignV is not empty %}
+            {% set headerIconAlignV = current.styleIconAlignV %}
+        {% endif %}
+        {% if current.styleIconSize is not empty %}
+            {% set headerIconSize = current.styleIconSize %}
+        {% endif %}
+        {% if current.styleIconAnimation is not empty %}
+            {% set headerIconAnimation = current.styleIconAnimation %}
+        {% endif %}
+        {% if current.styleIconColor is not empty %}
+            {% set headerIconColor = current.styleIconColor %}
+        {% endif %}
+        {% if current.styleIconLine is not empty %}
+            {% set headerIconLine = current.styleIconLine %}
+        {% endif %}
+        {% if current.styleImg|length %}
+            {% set headerImg =  current.styleImg[0] %}
+            {#{% set headerIcon =  '' %}#}
+        {% endif %}
+
+
+    {% elseif entry is defined %}
+        {% set ishomepage = (entry.slug == 'homepage') %}
+
+        {% set cot = 'entry' %}
+        {% set current = entry %}
+        {% set currentType = current.type.handle %}
+
+        {% if current.publicationCategory|length %}
+            {% set ep = current.publicationCategory[0] %}
+        {% elseif current.personStatus|length %}
+            {% set ep = current.personStatus[0] %}
+        {% elseif current.type == 'typePage' and current.ancestors|length %}
+            {% set ep = current.parent %}
+        {% endif %}
+
+        {% if ep is defined %}
+
+            {% set headerTitle =  ep.title %}
+            {% if ep.styleThemeObject|length %}
+                {% set headerTheme = 'ct' ~ ep.styleThemeObject[0].id %}
+                {% set headerThemeFull = 'md-theme-' ~ headerTheme %}
+            {% endif %}
+            {% if ep.styleHeight is not empty %}
+                {% set headerHeight = ep.styleHeight %}
+            {% endif %}
+            {% if ep.styleIcon %}
+                {% set headerIcon = ep.styleIcon %}
+            {% endif %}
+            {% if ep.styleIconAlign is not empty %}
+                {% set headerIconAlign = ep.styleIconAlign %}
+            {% endif %}
+            {% if ep.styleIconAlignV is not empty %}
+                {% set headerIconAlignV = ep.styleIconAlignV %}
+            {% endif %}
+            {% if ep.styleIconSize is not empty %}
+                {% set headerIconSize = ep.styleIconSize %}
+            {% endif %}
+            {% if ep.styleIconAnimation is not empty %}
+                {% set headerIconAnimation = ep.styleIconAnimation %}
+            {% endif %}
+            {% if ep.styleIconColor is not empty %}
+                {% set headerIconColor = ep.styleIconColor %}
+            {% endif %}
+            {% if ep.styleIconLine is not empty %}
+                {% set headerIconLine = ep.styleIconLine %}
+            {% endif %}
+            {% if ep.styleImg|length %}
+                {% set headerImg =  ep.styleImg[0] %}
+                {#{% set headerIcon =  '' %}#}
+            {% endif %}
+
+        {% endif %}
+
+
+        {% set tagged = current['taglist'] is defined ? current.taglist %}
+        {% set headerTitle =  current.title %}
+
+
+
+        {% if current.styleThemeObject|length %}
+            {% set headerTheme = 'ct' ~ current.styleThemeObject[0].id %}
+            {% set headerThemeFull = 'md-theme-' ~ headerTheme %}
+        {% endif %}
+        {% if current.styleHeight is not empty %}
+            {% set headerHeight = current.styleHeight %}
+        {% endif %}
+        {% if current.styleIcon %}
+            {% set headerIcon = current.styleIcon %}
+        {% endif %}
+        {% if current.styleIconAlign is not empty %}
+            {% set headerIconAlign = current.styleIconAlign %}
+        {% endif %}
+        {% if current.styleIconAlignV is not empty %}
+            {% set headerIconAlignV = current.styleIconAlignV %}
+        {% endif %}
+        {% if current.styleIconSize is not empty %}
+            {% set headerIconSize = current.styleIconSize %}
+        {% endif %}
+        {% if current.styleIconAnimation is not empty %}
+            {% set headerIconAnimation = current.styleIconAnimation %}
+        {% endif %}
+        {% if current.styleIconColor is not empty %}
+            {% set headerIconColor = current.styleIconColor %}
+        {% endif %}
+        {% if current.styleIconLine is not empty %}
+            {% set headerIconLine = current.styleIconLine %}
+        {% endif %}
+        {% if current.styleImg|length %}
+            {% set headerImg =  current.styleImg[0] %}
+            {#{% set headerIcon =  '' %}#}
+        {% endif %}
+
+        {% set hBanners = entry['styleHeaderBanners'] is defined and current.styleHeaderBanners|length ? current.styleHeaderBanners : false %}
+
+    {% else %}
+    {% endif %}
+
+
+{% set bc = [] %}
+{% set sm = [] %}
+{% set cm = [] %}
+
+{% if cot != 'category' and current.type == 'typePerson' %}
+    {% set e_parent = current.personStatus[0] %}
+    {% set m_parent = craft.entries.section('menus').relatedTo({
+    targetElement: e_parent,
+    field: 'menuItem.obj'
+    }).last %}
+    {% set inmenu = m_parent|length ? true : false %}
+{% elseif cot != 'category' and current.type == 'typePublication' %}
+    {#PUBL#}
+    {#<hr>#}
+    {% set e_parent = current.publicationCategory[0] %}
+    {% set m_parent = craft.entries.section('menus').relatedTo({
+    targetElement: e_parent,
+    field: 'menuItem.obj'
+    }).last %}
+    {% set inmenu = m_parent|length ? true : false %}
+{% else %}
+    {% set m_item = craft.entries.section('menus').relatedTo({
+    targetElement: current,
+    field: 'menuItem.obj'
+    }).last %}
+    {% set inmenu = m_item|length ? true : false %}
+{% endif %}
+
+{% if inmenu %}
+    {% if m_parent is defined %}
+        {#MPARENT#}
+        {#<hr>#}
+        {#{{ m_parent.title }} LEVEL {{ m_parent.level }}#}
+        {% set bc = bc|merge([m_parent]) %}
+        {% if m_parent.level>1 %}
+            {% set m_parent_parent = m_parent.parent %}
+            {% set bc = bc|merge([m_parent_parent]) %}
+            {% set sm = m_parent_parent.children.level(m_parent.level) %}
+            {% set cm = m_parent.children.level(m_parent.level + 1) %}
+        {% else %}
+            {% set cm = m_parent.children.level(2) %}
+        {% endif %}
+
+    {% elseif m_item is defined %}
+        {#MITEM#}
+        {#<hr>#}
+        {#{{ m_item.title }} LEVEL {{ m_item.level }}#}
+        {#<hr>#}
+        {% set bc = bc|merge([m_item]) %}
+        {% if m_item.level>1 %}
+            {% set m_parent = m_item.parent %}
+            {% set bc = bc|merge([m_parent]) %}
+            {% set sm = m_parent.children.level(m_item.level) %}
+            {% set cm = m_item.children.level(m_item.level + 1) %}
+        {% else %}
+            {% set cm = m_item.children.level(2) %}
+        {% endif %}
+    {% endif %}
+
+{% else %}
+    {#NOT IN MENU#}
+{% endif %}
+
+
+{% block all %}
+
+{% endblock %}
+
+{% endcache %}

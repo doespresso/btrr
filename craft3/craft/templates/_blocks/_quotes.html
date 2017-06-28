@@ -1,0 +1,15 @@
+{% if block.blockSource == 'tagged' %}
+    {% set qts = craft.entries.section('qts').relatedTo(tagged).limit(5) %}
+{% elseif block.blockSource == 'added' and block.blockContent|length %}
+    {% set qts = block.blockContent %}
+{% elseif block.blockSource == 'related' %}
+    {% set qts = entry.relatedQuotes is defined and entry.relatedQuotes|length ? entry.relatedQuotes %}
+{% else %}
+{% endif %}
+
+{% if qts is defined and qts|length %}
+    {% set templ = "quotes/_swiper.html" %}
+    {% include templ %}
+{% else %}
+    {% set be = true %}
+{% endif %}

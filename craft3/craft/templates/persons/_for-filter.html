@@ -1,0 +1,3 @@
+{% set ps = item.relatedServices|length ? item.relatedServices.level(1) %}
+{% set pb = item.relatedBranches|length ? item.relatedBranches.level(1) %}
+ in-filter="true" spec="[[{% for i in ps %}{{ i.id }}{{ not loop.last ? ','}}{% endfor %}],[{% for i in pb %}{{ i.id }}{{ not loop.last ? ','}}{% endfor %}]]" id="person{{ item.id }}" :s="s_service" :b="s_branch" v-person

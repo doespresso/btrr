@@ -1,0 +1,21 @@
+{% cache globally %}
+{% set items = craft.entries.section('menus') %}
+<md-sidenav class="md-left md-fixed" ref="leftSidenav" @open="open('Left')" @close="close('Left')" md-swipeable>
+    <md-toolbar class="md-medium">
+        <div class="md-toolbar-container">
+            <h3 class="md-title">{{ siteName }}</h3>
+        </div>
+    </md-toolbar>
+    <div class="main-sidebar-links">
+        {{ include("menus/_list-collapse.html") }}
+    </div>
+    {#<md-toolbar class="md-bottom-bar md-fixed">#}
+        {#<md-button @click.native="toggleRightSidenav">Запрос</md-button>#}
+    {#</md-toolbar>#}
+    <md-bottom-bar>
+        <md-bottom-bar-item md-icon="place" href="/offices">{{ 'Offices'|translate }}</md-bottom-bar-item>
+        <md-bottom-bar-item md-icon="send" @click.native="toggleRightSidenav">{{ 'Request'|translate }}</md-bottom-bar-item>
+        <md-bottom-bar-item md-icon="language" href="{{ globalContacts.btiUrl }}" target="_blank">{{ 'World'|translate }}</md-bottom-bar-item>
+    </md-bottom-bar>
+</md-sidenav>
+{% endcache %}

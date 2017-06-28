@@ -1,0 +1,19 @@
+<md-list class="{{ classes }} md-transparent">
+    {% for item in items %}
+        {% set url = item.url %}
+        {% if item.type == 'typeService' and item.level > 1 %}
+            {% set url = item.parent.url %}
+        {% endif %}
+        <md-list-item href="{{url}}">
+            {% if divider is defined %}
+                <md-divider></md-divider>
+            {% endif %}
+            <div class="md-list-text-container">{{ item.title }}</div>
+            {% if item.url is defined %}
+                <md-button class="md-icon-button md-list-action">
+                    <md-icon>chevron_right</md-icon>
+                </md-button>
+            {% endif %}
+        </md-list-item>
+    {% endfor %}
+</md-list>

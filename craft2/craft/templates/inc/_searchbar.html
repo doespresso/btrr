@@ -1,0 +1,16 @@
+<div :class="{active:showSearchbar}" id="searchbar">
+    <div class="search-box-input" md-elevation="3">
+        {#<md-icon>search</md-icon>#}
+        <form novalidate @submit.stop.prevent="submit">
+                <input placeholder="{{ 'Search'|t }}"/>
+                {#v-model="searchQuery"#}
+        </form>
+        <md-button @click.native="hideSearch" class="md-icon-button" md-disabled><md-icon>close</md-icon></md-button>
+    </div>
+    <div class="search-box-results">
+        <div class="ctr">
+            123
+        </div>
+    </div>
+    <div class="md-backdrop" @click.prevent="hideSearch"></div>
+</div>

@@ -1,0 +1,11 @@
+<div class="section-content">
+    <div class="grid-equalHeight section-content cards cards--fluid">
+        {% for item in navs %}
+            {% if item.id != current.id or showCurrent %}
+                <div class="col">
+                    {% include "nav/_card-dialog.html" %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<md-card class="has-ripple" md-with-hover>
+    <md-card-area class="md-flex">
+        {% if item.personPhoto|length %}
+            {% set photo = item.personPhoto.first() %}
+            <md-card-media class="photo-aspect has-ripple" style="background-image:url('{{ photo.getUrl('resizePersonsList') }}')">
+                <a class="cover-link" href="{{ item.url }}">
+                </a>
+                <md-ink-ripple/>
+            </md-card-media>
+        {% endif %}
+        <md-card-content>
+            <h3 class="md-title">{{ item.personFirstname }} {{ item.personLastname }}</h3>
+            {#<div class="md-subhead">{{ item.personStatusOver ? item.personStatusOver : item.personStatus.first().groupTeamStatus }}. {{ item.personDepartment }}</div>#}
+            <div class="md-subhead">{{ item.personStatusOver ? item.personStatusOver : item.personStatus[0].groupTeamStatus }}</div>
+        </md-card-content>
+    </md-card-area>
+    <md-card-actions>
+        <md-button href="{{ item.url }}">Профайл</md-button>
+        <span class="md-flex"></span>
+        {#<md-button class="md-icon-button" href="tel:{{ item.contactTel1 ? item.contactTel1 : globalContacts.contactTel1 | replace (' ','') }}">#}
+        {#<md-icon>call</md-icon>#}
+        {#</md-button>#}
+        <md-button class="md-icon-button" href="mailto:{{ item.contactEmail ? item.contactEmail ~ ',' | replace (' ','') }}{{ globalContacts.contactEmail | replace (' ','') }}">
+            <md-icon>email</md-icon>
+        </md-button>
+    </md-card-actions>
+</md-card>

@@ -1,0 +1,52 @@
+{% extends "_page.html" %}
+{% set perPage = category.listPerPage ? category.listPerPage : 10 %}
+
+
+{#{% paginate craft.entries.section('publications').relatedTo(category).limit(perPage) as pageInfo, news %}#}
+{% paginate craft.entries({
+section:'publications',
+'relatedTo':category,
+'with':['cardColor','cardImg','publicationCategory']
+}).limit(perPage) as pageInfo, news
+%}
+
+{% block content %}
+    <section class="section">
+        {% if news|length %}
+            {% include "publications/_list-cards.html" %}
+        {% endif %}
+    </section>
+{% endblock %}
+
+{% block pager %}
+    {% if pageInfo is defined %}
+        <div class="ctr actions">
+            <div class="grid-middle">
+
+                <div class="col text-left">
+                    {% if pageInfo.prevUrl %}
+                        <md-button href="{{ pageInfo.prevUrl }}" class="md-icon-button md-raised md-white" title="{{ 'Previous Page' | translate }}">
+                            <md-icon>arrow_back</md-icon>
+                        </md-button>
+                    {% endif %}
+                </div>
+
+
+                {% if pageInfo.totalPages > 1 %}
+                    <div class="col pages-counter text-center">{{ pageInfo.currentPage }} {{ 'of' | t }} {{ pageInfo.totalPages }}</div>
+                {% endif %}
+
+
+                <div class="col text-right">
+                    {% if pageInfo.nextUrl %}
+                        <md-button href="{{ pageInfo.nextUrl }}" class="md-icon-button md-raised md-white" title="{{ 'Next Page' | translate }}">
+                            <md-icon>arrow_forward</md-icon>
+                        </md-button>
+                    {% endif %}
+                </div>
+
+
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

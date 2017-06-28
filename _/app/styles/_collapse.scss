@@ -1,0 +1,87 @@
+.md-title p{
+  margin:0;
+  padding:0;
+}
+.md-collapse {
+  width:100%;
+  background-color: #fff;
+  padding:0;
+  margin-bottom: 8px;
+}
+.md-collapse .md-collapse-header {
+  width:100%;
+  padding: 16px 24px;
+  //border-radius: 3px;
+  position: relative;
+
+  cursor:pointer;
+}
+
+.md-collapse:not(:first-child) .md-collapse-header{
+  //border-top: 1px solid $divider-color;
+}
+
+.md-collapse .md-collapse-header > div {
+  display: flex;
+  flex-direction: row!important;
+  justify-content: space-between!important;
+  align-items: flex-start!important;
+  flex-wrap: nowrap;
+  user-select: none;
+}
+.md-collapse-header-text{
+  flex:1;
+  .md-title{
+    font-size: 14px;
+    font-weight:500;
+    line-height: 1.6;
+  }
+  .md-subhead{
+    font-weight:400px;
+    font-size:14px;
+    opacity:0.7;
+  }
+}
+.md-collapse .md-collapse-header .md-icon {
+  //position: absolute;
+  //font-size: 0.4em;
+  //top: calc(50% - 0.4em);
+  //left: 20px;
+  //color: #c5c9d0;
+  transform: rotate(90deg);
+  transition:transform 0.2s ease;
+  margin-left:24px;
+}
+.md-collapse.is-active .md-collapse-header .md-icon {
+  transform: rotate(-90deg);
+}
+
+.md-collapse.is-active .md-collapse-header {
+  //border-bottom: 1px solid $divider-color;
+}
+.md-collapse.is-active .md-collapse-header .md-collapse-header-text {
+padding-bottom:8px;
+}
+.md-collapse-content{
+  padding:0;
+}
+.md-collapse .md-collapse-content-box {
+  width:100%;
+  //-moz-transition: all .2s;
+  //-o-transition: all .2s;
+  //-webkit-transition: all .2s;
+  //transition: all .2s;
+  padding: 0 24px 8px 24px;
+  .md-list{
+    margin-left:-24px;
+    margin-right:-24px;
+  }
+}
+
+.md-collapse .actions{
+  display:flex;
+  width:100%;
+  align-items: center;
+  border-top: 1px solid $divider-color;
+  //padding:16px;
+}

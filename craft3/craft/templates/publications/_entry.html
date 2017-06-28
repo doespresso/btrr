@@ -1,0 +1,158 @@
+{% extends "_page.html" %}
+{% block content %}
+    <div class="ctr">
+        <div class="grid-noBottom">
+            <div class="col-8_xs-12_sm-12_md-9">
+                <article class="article">
+                    {#<article class="article">#}
+                    <div class="content">
+                        {% if entry.styleImg|length and entry.publicationImgInList == '1' and not entry.videoCodeYT %}
+                            <div class="article-image">
+                                <img src="{{ entry.styleImg[0].getUrl('resizePublicationBody') }}"/>
+                            </div>
+                        {% endif %}
+
+                        {% if entry.videoCodeYT %}
+                            <div class="video-container m-b-20">
+                                <iframe class="aspect" src="https://www.youtube.com/embed/{{ entry.videoCodeYT }}?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0"
+                                        allowfullscreen></iframe>
+                            </div>
+                        {% endif %}
+
+                        {% if entry.eventDate is defined and entry.eventDate is not empty and entry.eventOn == '1' %}
+                            <section class="section event-options">
+                                <div class="md-subheader">
+                                    {% if entry.eventRegEnd < now and entry.eventDate >= now %}
+                                        <span>Регистрация завешена</span>
+                                    {% elseif entry.eventDate < now %}
+                                        <span>Мероприятие проведено</span>
+                                    {% else %}
+                                        <span class="primary-color">Регистрация открыта</span>
+                                    {% endif %}
+                                </div>
+                                <md-list class="md-transparent md-double-line md-inline">
+                                    <md-list-item>
+                                        <md-icon>today</md-icon>
+                                        <div class="md-list-text-container">
+                                            <span>{{ entry.eventDate | date('j M Y') }}</span>
+                                        </div>
+                                        <md-divider class="md-inset"></md-divider>
+                                    </md-list-item>
+
+                                    {% if entry.eventPlace|length %}
+                                        <md-list-item
+                                                href="https://www.google.com/maps/place/{{ entry.eventAddress.lat }},{{ entry.eventAddress.lng }}/@{{ entry.eventAddress.lat }},{{ entry.eventAddress.lng }}"
+                                                target="_blank">
+                                            <md-icon class="md-size-x">place</md-icon>
+                                            <div class="md-list-text-container">
+                                                <span>{{ entry.eventPlace }}</span>
+                                                <span>{{ entry.eventAddress is defined ? entry.eventAddress.address }}</span>
+                                            </div>
+                                            {% if entry.eventAddress is defined %}
+                                                <md-icon>open_in_new</md-icon>
+                                            {% endif %}
+                                        </md-list-item>
+                                    {% endif %}
+                                </md-list>
+                                {% if entry.eventRegEnd and entry.eventRegEnd > now %}
+                                    <md-divider class="md-inset"></md-divider>
+                                    <div class="actions">
+                                        <md-button class="md-raised md-primary" {{ entry.eventLink|length ? 'href="'~ entry.eventLink ~ '"' }}>Регистрация</md-button>
+                                    </div>
+                                {% endif %}
+                            </section>
+                        {% endif %}
+
+                        {% if entry.Short is defined and entry.Short is not empty %}
+                            <section class="section article-short">
+                                <div class="html-content">{{ entry.Short }}</div>
+                            </section>
+                        {% endif %}
+
+
+                        {% if entry.fullText is defined and entry.fullText is not empty %}
+                            <section class="section article-full">
+                                <div class="html-content">{{ entry.fullText }}</div>
+                            </section>
+                        {% endif %}
+                        {% set matrix = entry.pageMatrix %}
+                        {% include "matrix/_matrix.html" %}
+
+
+                        {% if entry.eventTimetable is defined and entry.eventTimetable is not empty and entry.eventOn == '1' %}
+                            <section class="section event-timetable">
+                                <md-table>
+                                    <md-subheader>{{ 'Schedule'|t }}</md-subheader>
+                                    <md-table-body>
+                                        {% for item in entry.eventTimetable %}
+                                            <md-table-row>
+                                                <md-table-cell class="no-wrap">{{ item.tTime }}</md-table-cell>
+                                                <md-table-cell>{{ item.tContent }}</md-table-cell>
+                                            </md-table-row>
+                                        {% endfor %}
+                                    </md-table-body>
+                                </md-table>
+                            </section>
+                        {% endif %}
+
+                        {% if entry.eventSpeakers is defined and entry.eventSpeakers|length and entry.eventOn == '1' %}
+                            <section class="section section-speakers">
+                                {% set persons = entry.eventSpeakers %}
+                                {% include "persons/_list-avatar.html" %}
+                            </section>
+                        {% endif %}
+
+                    </div>
+
+                    <hr class="line"/>
+
+                    <div class="article-info article-info-bottom">
+                        <div>
+                            <span class="date-time"><md-icon>access_time</md-icon>{{ entry.postDate.localeDate() }}</span>
+                            <md-button href="{{ entry.publicationCategory[0].url }}" class="parent-category">
+                                <md-icon class="icon-time">arrow_forward</md-icon>
+                                {{ entry.publicationCategory[0].title }}
+                            </md-button>
+                        </div>
+                        <div>
+                            {% include "inc/_share-inline.html" %}
+                        </div>
+                    </div>
+
+                </article>
+            </div>
+
+            <aside class="col-4_xs-12_sm-12_md-3 aside-column">
+                <div class="aside-content aside-titles">
+                    <section class="section">
+                        {% set _related = craft.entries({
+                        section: ['services','branches','persons'],
+                        relatedTo:tagged,
+                        id:'not ' ~ entry.id,
+                        level:1
+                        }).limit(5) %}
+                        {% if _related|length %}
+                            <div class="section-title">
+                                {#<md-icon class="md-size-">link</md-icon>#}
+                                {#{{ 'On the topic' |t }}#}
+                            </div>
+                            <div class="section-content">
+                                {% include "inc/_chips.html" %}
+                            </div>
+                        {% endif %}
+                    </section>
+                    <section class="section">
+                        <div class="section-title">
+                            {#<md-icon class="md-size-">bookmark_border</md-icon>#}
+                            {{ 'Social' |t }}
+                        </div>
+                        <div class="section-content">
+                            {% include "inc/_social-icons.html" %}
+                        </div>
+                    </section>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+{% endblock %}

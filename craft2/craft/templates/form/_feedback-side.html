@@ -1,0 +1,76 @@
+<md-sidenav class="md-right md-sidenav-big md-fixed" ref="rightSidenav" @open="open('Right')" @close="close('Right')">
+    <md-toolbar>
+        <div class="md-toolbar-container">
+            <h3 class="md-title">{{ 'Make Request' | translate }}</h3>
+        </div>
+    </md-toolbar>
+    <div class="sidebar-content">
+        <form @submit.stop="">
+            <md-input-container>
+                <label>{{ 'Your Name'|t }}</label>
+                <md-input placeholder="{{ 'Your Name'|t }}"></md-input>
+            </md-input-container>
+            <md-input-container>
+                <label>{{ 'Your Position'|t }}</label>
+                <md-input placeholder="{{ 'Your Position'|t }}"></md-input>
+            </md-input-container>
+            <md-input-container>
+                <label>{{ 'Company'|t }}</label>
+                <md-input placeholder="{{ 'Company'|t }}"></md-input>
+            </md-input-container>
+            <md-input-container>
+                <label>{{ 'Region'|t }}</label>
+                <md-input placeholder="{{ 'Region'|t }}"></md-input>
+            </md-input-container>
+            <md-input-container>
+                <label>{{ 'Your Industry'|t }}</label>
+                <md-input placeholder="{{ 'Your Industry'|t }}"></md-input>
+            </md-input-container>
+            <md-input-container>
+                <label>{{ 'Services you are interested'|t }}</label>
+                {% cache %}
+                {% set sfeedback = craft.entries.section('services').level(1) %}
+                <md-select name="feedback_services" id="feedback_services" v-model="feedbackServices" multiple>
+                        {% for item in sfeedback %}
+                            <md-option value="s_{{ item.id }}">{{ item.title }}</md-option>
+                        {% endfor %}
+                </md-select>
+                {% endcache %}
+            </md-input-container>
+            <md-input-container>
+                {#<md-icon>settings_phone</md-icon>#}
+                <label>{{ 'Your Phone'|t }}</label>
+                <md-input placeholder="{{ 'Your Phone'|t }}"></md-input>
+            </md-input-container>
+            <md-input-container>
+                {#<md-icon>mail_outline</md-icon>#}
+                <label>{{ 'Your E-mail'|t }}</label>
+                <md-input placeholder="{{ 'Your E-mail'|t }}"></md-input>
+            </md-input-container>
+            <md-input-container>
+                <label>Ваши комментарии</label>
+                <md-textarea></md-textarea>
+            </md-input-container>
+            <div class="actions">
+                <md-button class="md-primary md-raised" @click.native="closeRightSidenav">{{ 'Submit'| t }}</md-button>
+            </div>
+        </form>
+    </div>
+    <md-bottom-bar>
+        <md-bottom-bar-item md-icon="email" href="{{ 'mailto:' ~ globalContacts.contactEmail| replace (' ','') }}">{{ 'E-mail'|translate }}</md-bottom-bar-item>
+        <md-bottom-bar-item md-icon="place" href="/offices">{{ 'Offices' | t }}</md-bottom-bar-item>
+        <md-bottom-bar-item md-icon="language" href="{{ globalContacts.btiUrl }}" target="_blank">{{ 'World'|translate }}</md-bottom-bar-item>
+    </md-bottom-bar>
+
+    {#<md-button class="md-raised md-accent" @click.native="closeRightSidenav">{{ 'Close' | translate }}</md-button>#}
+</md-sidenav>
+
+
+{#'Your Name'=>'Фамилия Имя Отчество',#}
+{#'Your Position'=>'Ваша должность',#}
+{#'Company'=>'Название компании',#}
+{#'Region'=>'Регион',#}
+{#'Your Industry'=>'Сфера деятельности',#}
+{#'Services you are interested'=>'Интересующие Вас услуги',#}
+{#'Your Phone'=>'Контактный телефон',#}
+{#'Your E-mail'=>'E-mail',#}

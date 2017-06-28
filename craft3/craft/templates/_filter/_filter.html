@@ -1,0 +1,35 @@
+{% cache %}
+{% set sfilter = craft.entries.section('services').level(1) %}
+{% set bfilter = craft.entries.section('branches').level(1) %}
+{#[[{% for i in sfilter %}{{ i.id }}{{ not loop.last ? ','}}{% endfor %}],[{% for i in bfilter %}{{ i.id }}{{ not loop.last ? ','}}{% endfor %}]]#}
+
+<div class="filter-persons">
+    <div class="ctr">
+        <div class="grid-2_xs-1_sm-2">
+            <div class="col">
+                <md-input-container>
+                    <label for="s_service">{{ 'Service Line'|t }}</label>
+                    <md-select name="s_service" id="s_service" v-model="s_service">
+                        {% for item in sfilter %}
+                            <md-option value="{{ item.id }}">{{ item.title }}</md-option>
+                        {% endfor %}
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div class="col">
+                <md-input-container>
+                    <label for="s_branch">{{ 'Industry'|t }}</label>
+                    <md-select name="s_branch" id="s_branch" v-model="s_branch">
+                        {% for item in bfilter %}
+                            <md-option value="{{ item.id }}">{{ item.title }}</md-option>
+                        {% endfor %}
+                    </md-select>
+                </md-input-container>
+            </div>
+        </div>
+    </div>
+</div>
+{% endcache %}
+
+
+

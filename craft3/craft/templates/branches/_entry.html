@@ -1,0 +1,21 @@
+{% extends "_page.html" %}
+{% block content %}
+    <div class="main-column full-width service">
+        <section class="section p-b-80">
+            <div class="ctr">
+                    <div class="grid-1">
+                        {% if entry.Short|length or entry.fullText|length %}
+                            <div class="col">
+                                <div class="section-title">{{ entry.Short }}</div>
+                                <div class="section-content html-content">{{ entry.fullText }}</div>
+                                <div class="actions">{% include "inc/_request-button.html" with {'label':'Send Request'|t}%}</div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+        </section>
+        {% set matrix = globalBranch.iMatrix %}
+        {% include('matrix/_matrix.html') %}
+    </div>
+{% endblock %}
+

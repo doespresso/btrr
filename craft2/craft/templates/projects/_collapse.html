@@ -1,0 +1,24 @@
+<collapse :selected=false class="md-whiteframe md-whiteframe-1dp">
+    <div slot="collapse-header">
+        <div class="md-collapse-header-text">
+            <div class="md-title">{{ item.projectTitle ? item.projectTitle : item.title }}</div>
+        </div>
+        <md-icon>chevron_right</md-icon>
+    </div>
+    <div slot="collapse-body">
+        <div class="html-content">{{ item.projectDescription }}</div>
+        {% if item.projectLink|length or item.projectFile|length %}
+            <div class="actions">
+                {% if item.projectFile|length %}
+                    <md-button class="md-icon-button-0" href="{{item.projectFile[0].url}}" title="{{ 'Download'|t }}"><md-icon>file_download</md-icon> {{ 'Download'|t }}</md-button>
+                {% endif %}
+                <span class="md-flex"></span>
+                {% if item.projectLink|length %}
+                    <md-button href="{{ item.projectLink[0].url }}">{{ 'Show More'|t }}</md-button>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</collapse>
+
+

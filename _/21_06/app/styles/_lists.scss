@@ -1,0 +1,214 @@
+.md-list-text-container > :nth-child(3).file-info, .file-info {
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.contacts-list {
+  .md-list-item .md-list-item-container {
+    min-height: none;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  span {
+    font-size: 14px;
+    white-space: normal;
+    line-height: 16px;
+  }
+}
+
+.md-list-item {
+  .md-button {
+    border-radius: 1px;
+  }
+  .md-icon {
+    color: #ccc;
+  }
+  &:hover {
+    .md-icon {
+      //color: #bbb;
+    }
+  }
+}
+
+//.md-tabs.no-h-p .md-tab {
+//  padding-left: 0;
+//  padding-right: 0;
+//}
+//
+//.doc-type {
+//  font-size: 12px;
+//  text-transform: uppercase;
+//  font-weight: 500;
+//}
+//
+//a.md-list-text-container {
+//  text-decoration: none !important;
+//}
+//
+//@include layout-xsmall {
+//  .md-divider {
+//    //margin-right: -$gl-gutter/2;
+//  }
+//}
+//
+//.md-list-item-container .md-avatar {
+//  background-color: #ccc;
+//  background-size: cover;
+//  background-position: center top;
+//  .md-icon{
+//    color:#fff;
+//  }
+//}
+//
+//.md-list-item-container .md-icon{
+//  color:#ccc;
+//}
+//
+//.md-list-item.md-inset .md-list-item-container {
+//  @include layout-xsmall {
+//    padding-left: 16px;
+//  }
+//}
+//
+////
+////.md-list {
+////
+////  &.big-icons {
+////    .md-list-item .md-list-item-container {
+////      padding-left: 0;
+////      min-height: 102px;
+////    }
+////    .list-title{
+////      font-weight:500;
+////      font-size: 18px;
+////      margin-bottom:16px;
+////    }
+////    //.md-list-item .md-list-item-container .md-avatar:first-child, .md-list-item .md-list-item-container .md-list-action:first-child{}
+////    .md-list-item .md-list-item-container .md-avatar:first-child {
+////      margin-right: 24px;
+////      width: 80px;
+////      height: 80px;
+////      min-width: 80px;
+////      min-height: 80px;
+////      border-radius: 40px;
+////      background-color: #ccc;
+////      .md-icon {
+////        width: 48px;
+////        height: 48px;
+////        min-width: 48px;
+////        min-height: 48px;
+////        font-size: 48px;
+////      }
+////    }
+////    .md-divider.md-inset {
+////      margin-left: 104px;
+////    }
+////  }
+////}
+//
+//
+.md-list.content-list {
+  .md-list-item .md-list-item-container {
+    padding-left: 16px;
+    @include layout-small-and-up {
+      padding-left: 40px;
+    }
+  }
+  .md-avatar.md-large {
+    @include layout-xsmall {
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+    }
+  }
+  .md-list-text-container {
+    //padding-right: 62px;
+    @include layout-small-and-up {
+      span {
+        white-space: normal;
+      }
+    }
+  }
+  //.md-avatar.md-large {
+  //  @include layout-small-and-up {
+  //    margin-right: 24px;
+  //  }
+  //}
+  .md-list-item {
+    min-height: 88px;
+  }
+  &.speakers-list {
+    .md-list-item-content {
+      padding: 40px 24px;
+      @include layout-small-and-up {
+        padding: 0px 80px 40px 96px;
+      }
+    }
+  }
+  .md-list-item-content {
+    .html-content {
+      padding: 0;
+      margin: 0;
+    }
+  }
+}
+
+.md-list-item-container .md-avatar {
+  background-color: #ccc;
+  background-size: cover;
+  background-position: center top;
+  .md-icon {
+    color: #fff;
+  }
+}
+
+.list-head-text {
+  height: 28px;
+  padding-right: 32px;
+  padding-left: 24px;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  line-height: 28px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.md-list .md-list-item:last-child {
+  .md-divider {
+    display: none;
+  }
+}
+
+.md-list {
+  > .md-divider:last-child {
+    display: none;
+  }
+}
+
+//////////////////NAV
+.list--nav {
+  .md-list-item .md-list-item-container {
+    min-height: none;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
+
+.md-list {
+  &.md-medium {
+    .md-list-text-container {
+      font-size: 14px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+  }
+  &.md-inline{
+    padding-top:0;
+    padding-bottom:0;
+  }
+}
+
+.md-list.md-transparent .md-list-item-expand .md-list-item-container{
+  background-color: transparent!important;
+}

@@ -1,0 +1,233 @@
+{% set noSubmenu = false %}
+
+{% if cot != 'category' and current.type == 'typePerson' %}
+    {% set pcat = current.personStatus[0] %}
+    {% set m_current = craft.entries.section('menus').relatedTo({
+    targetElement: pcat,
+    field: 'menuItem.obj'
+    }).first %}
+{% elseif cot != 'category' and current.type == 'typePublication' %}
+    {% set pcat = current.publicationCategory[0] %}
+    {% set m_current = craft.entries.section('menus').relatedTo({
+    targetElement: pcat,
+    field: 'menuItem.obj'
+    }).first %}
+    {% set noSubmenu = true %}
+{% else %}
+    {% set m_current = craft.entries.section('menus').relatedTo({
+    targetElement: current,
+    field: 'menuItem.obj'
+    }).first %}
+{% endif %}
+
+
+
+{% set bc = [] %}
+
+{% if m_current %}
+    {% if not noSubmenu %}
+        {#SUBMENU#}
+        {#SUBMENU#}
+        {#SUBMENU#}
+        {#{{ m_current.level }}#}
+        {#{{ m_current.showSub }}#}
+        {% if m_current.parent %}
+            {#CURRENT: {{ m_current.title }}<br/>#}
+            {#PARENT: {{ m_current.parent.title }}<br/>#}
+            {% set m_parent =  m_current.parent %}
+            {% set tosub = m_parent.showInSub %}
+            {% set plevel = m_parent.level %}
+            {% set clevel = m_current.level %}
+            {#{{ m_parent.title }} {{ m_parent.showInSub }}<br/>#}
+            {% if tosub == "children" %}
+                {% set submenu = m_parent.children.level(clevel) %}
+            {% elseif tosub == "parent" %}
+                {% if m_parent.parent %}
+                    {% set submenu =  m_parent.parent.children.level(plevel) %}
+                {% else %}
+                    {% set submenu =  craft.entries.section('menus').level(plevel) %}
+                {% endif %}
+            {% endif %}
+            {#<hr>#}
+            {#{% if submenu|length %}#}
+            {#{% for s in submenu %}#}
+            {#{{ s.title }}#}
+            {#{% endfor %}#}
+            {#{% endif %}#}
+            {#<hr>#}
+        {% elseif m_current.level == 1 and m_current.showSub == 1 %}
+            {% set clevel = m_current.level %}
+            {% set submenu = m_current.children.level(clevel+1) %}
+            {#current children#}
+            {#<hr>#}
+            {#{% if submenu|length %}#}
+            {#{% for s in submenu %}#}
+            {#{{ s.title }}#}
+            {#{% endfor %}#}
+            {#{% endif %}#}
+            {#<hr>#}
+        {% endif %}
+    {% endif %}
+
+    {#ADD TO BC#}
+    {#ADD TO BC#}
+    {#ADD TO BC#}
+
+    {% if m_current.hideBc !=1 %}
+        {% if m_current.menuItem.blocks[0].type != "Url" %}
+            {% set cUrl = m_current.menuItem.blocks[0].obj[0] is defined ? m_current.menuItem.blocks[0].obj[0].url %}
+        {% else %}
+            {% set cUrl = m_current.menuItem.blocks[0].obj %}
+        {% endif %}
+        {% set ci = [] %}
+        {% set ci = ci|merge([m_current]) %}
+        {% set ci = ci|merge([cUrl]) %}
+        {% set bc = bc|merge([ci]) %}
+    {% endif %}
+
+    {% set menu_level = m_current.level %}
+    {% set m_level = m_current.level %}
+    {#<b>{{ m_current.title }}</b> / initial level: {{ menu_level }}<br/>#}
+
+    {% for l in 1 .. m_level-1 if m_level>1 %}
+        {% set m_current = m_current.parent is defined ? m_current.parent %}
+        {% if m_current is defined %}
+            {% if m_current.hideBc !=1 %}
+                {% if m_current.menuItem.blocks[0].type != "Url" %}
+                    {% set cUrl = m_current.menuItem.blocks[0].obj[0] is defined ? m_current.menuItem.blocks[0].obj[0].url %}
+                {% else %}
+                    {% set cUrl = m_current.menuItem.blocks[0].obj %}
+                {% endif %}
+                {% set ci = [] %}
+                {% set ci = ci|merge([m_current]) %}
+                {% set ci = ci|merge([cUrl]) %}
+                {% set bc = bc|merge([ci]) %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    {#ADD TO BC#}
+    {#ADD TO BC#}
+    {#ADD TO BC#}
+
+{% endif %}
+
+        {% if bc|length>0 %}
+            {% set backNav %}
+                <div id="back-nav">
+                    <md-menu>
+                        <md-button class="md-icon-button" md-menu-trigger>
+                            <md-icon class="md-size-2x">arrow_back</md-icon>
+                        </md-button>
+                        <md-menu-content>
+                            <md-menu-item>My Item 1</md-menu-item>
+                            <md-menu-item>My Item 2</md-menu-item>
+                            <md-menu-item>My Item 3</md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </div>
+            {% endset %}
+        {% endif %}
+
+
+
+
+
+
+
+{#{% set m_current = craft.entries.section('menus').relatedTo({#}
+{#targetElement: current,#}
+{#field: 'menuItem.obj'#}
+{#}).first %}#}
+
+
+
+{#{% if m_current|length and m_current.level>1 %}#}
+
+    {#{% if m_current.parent is defined %}#}
+        {#{% set m_parent = m_current.parent %}#}
+        {#{% set m_parent_level = m_parent.level %}#}
+        {#&#123;&#35;> parent 2: {{ m_parent_parent ? m_parent_parent.title : m_parent_parent }}<br/>&#35;&#125;#}
+        {#> parent 1: {{ m_parent ? m_parent.title ~ m_parent.level : false }}<br/>#}
+    {#{% endif %}#}
+    {#> current: {{ m_current.title }}<br/>#}
+    {#{% if m_parent is defined %} {% set m_parent_parent = m_parent_parent.parent is defined ? m_parent.parent : false %} {% endif %}#}
+
+{#{% elseif current.type == 'typePerson' or current.type == 'typePublication' %}#}
+
+    {#> current: {{ current.type }}#}
+    {#{% if current.type == 'typePublication' %}#}
+        {#{% set pcat = current.personStatus[0] %}#}
+    {#{% elseif current.type == 'typePublication' %}#}
+        {#{% set pcat = current.publicationCategory[0] %}#}
+    {#{% endif %}#}
+
+    {#{% set m_parent = craft.entries.section('menus').relatedTo({#}
+    {#targetElement: pcat,#}
+    {#field: 'menuItem.obj'#}
+    {#}).first %}#}
+
+    {#{% if %}#}
+
+    {#> parent 1: {{ m_parent ? m_parent.title ~ m_parent.level : false }}<br/>#}
+
+{#{% endif %}#}
+
+
+
+
+
+
+
+
+    {% set top_menu %}
+
+        {% if false %}
+
+            {% if menu_item|length>0 %}
+                {#{{ menu_item.count }}#}
+                {% set menu_item = menu_item.last() %}
+                {#| current: {{ menu_item.title }}#}
+                {#{{ menu_item.level }}#}
+                {% if menu_item.parent|length %}
+                    {% set menu_item_parent = menu_item.parent %}
+                    {#| parent: {{ menu_item_parent.title }} / {{ menu_item_parent.showInSub}}#}
+                    {% if menu_item_parent.showInSub == 'children' %}
+                        {% set subitems =  menu_item_parent.children.menuHideTop({id: 'not 1' }) %}
+                        <md-tabs @goto="submenuClicked">
+                            {% for menu_subitem in subitems %}
+                                <md-tab id="{{ 'm'~menu_subitem.id }}" md-label="{{ menu_subitem.title }}" {{ menu_subitem.id == menu_item.id ? 'md-active' }}
+                                        md-href="{{ menu_subitem.menuItem.blocks[0].obj[0].url is defined ? menu_subitem.menuItem.blocks[0].obj[0].url : menu_subitem.menuItem.blocks[0].obj }}"></md-tab>
+                            {% endfor %}
+                        </md-tabs>
+                    {% endif %}
+                {% else %}
+                    {#no parent#}
+                {% endif %}
+            {% else %}
+                {#no menu item#}
+            {% endif %}
+
+        {% endif %}
+    {% endset %}
+
+
+
+{#{% if currentType in ['typePage','groupPublications','groupPersons'] %}#}
+    {{ top_menu }}
+{#{% endif %}#}
+
+{#<md-tabs>#}
+    {#<md-tab id="movies" md-label="Movies" v-on:click.capture="tabb()">#}
+        {#asd#}
+    {#</md-tab>#}
+
+    {#<md-tab id="music" md-label="Music" v-on:click.native="tabb">#}
+    {#</md-tab>#}
+
+    {#<md-tab id="books" md-label="Books" v-on:click.prevent="tabb">#}
+    {#</md-tab>#}
+
+    {#<md-tab id="pictures" md-label="Pictures">#}
+    {#</md-tab>#}
+{#</md-tabs>#}

@@ -1,0 +1,34 @@
+{#<div class="ctr">#}
+<div class="grid news--cards-mini">
+    {% for item in news %}
+        <div class="col-12">
+            <a href="{{ item.url }}">
+                <md-card>
+                    <md-card-header>
+                        <md-card-header-text>
+                            {#<span class="date md-subhead">{{ item.postDate.localeDate() }}</span>#}
+
+                            <div class="md-title">{{ item.title }}</div>
+                            {#<date class="date md-subhead"></date>#}
+                        </md-card-header-text>
+                        {% if item.cardImg|length %}
+                            {% if item.cardImg|length %}
+                                {% set photo = item.cardImg[0].getUrl('resizeNewsList') %}
+                            {% else %}
+                                {% set photo = '' %}
+                            {% endif %}
+                            <md-card-media class="has-ripple" style="background-image:url({{ photo }})">
+                                <md-ink-ripple/>
+                            </md-card-media>
+                        {% endif %}
+
+                    </md-card-header>
+                    <md-card-actions>
+                        <span class="md-flex"></span>
+                    </md-card-actions>
+                </md-card>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+{#</div>#}

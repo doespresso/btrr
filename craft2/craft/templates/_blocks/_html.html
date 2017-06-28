@@ -1,0 +1,19 @@
+{% if block.blockContent %}
+    <div class="section-content html-content t-color">
+        {{ block.blockContent }}
+    </div>
+    {% if bLink|length or bRequest == 1 %}
+        <div class="ctr">
+            <div class="grid">
+                <div class="col-12 actions">
+                    {% for item in bLink %}
+                        <md-button class="md-raised" href="{{ item.url }}">{{ item.title }}</md-button>
+                    {% endfor %}
+                    {% if bRequest == 1 %}
+                        {% include 'inc/_request-button.html' %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endif %}

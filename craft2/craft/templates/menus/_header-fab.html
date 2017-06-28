@@ -1,0 +1,30 @@
+{% cache globally %}
+<transition appear name="zoomin">
+    <div class="fab-header-container">
+        <md-menu md-direction="bottom left" md-size="5">
+            <md-button class="md-fab md-raised md-fab-header" md-theme="white" md-menu-trigger>
+                <md-icon>more_vertical</md-icon>
+            </md-button>
+            <md-menu-content>
+                <md-menu-item @click.native="toggleRightSidenav">
+                    <span>{{ 'Make Request' | t }}</span>
+                    <md-icon>send</md-icon>
+                </md-menu-item>
+                {#<md-menu-item>#}
+                {#<span>{{ 'Call' | t }}</span>#}
+                {#<md-icon>phone</md-icon>#}
+                {#</md-menu-item>#}
+                <md-menu-item href="/offices">
+                    <span>{{ 'Our offices' | t }}</span>
+                    <md-icon>place</md-icon>
+                </md-menu-item>
+                {#<md-divider></md-divider>#}
+                <md-menu-item href="{{ globalContacts.btiUrl }}">
+                    <span>{{ 'Baker Tilly International' | t }}</span>
+                    <md-icon>language</md-icon>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+</transition>
+{% endcache %}

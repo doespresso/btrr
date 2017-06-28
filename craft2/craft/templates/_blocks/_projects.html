@@ -1,0 +1,9 @@
+{% if block['isSwiper'] is defined and block.isSwiper == 1 and projects|length>4%}
+    {% set swiperData = projects %}
+    {% set classes = ' swiper--cards ' %}
+    {% set cardTemplate = 'projects/_card.html' %}
+    {% include "_swiper/_swiper.html" %}
+{% else %}
+    {% set templ = tmpl is not empty ? "projects/" ~ tmpl : "projects/_list-collapse.html" %}
+    {% include templ %}
+{% endif %}

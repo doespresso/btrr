@@ -1,0 +1,86 @@
+{% extends "_page.html" %}
+{% set headerProvider = 'entry' %}
+
+{% set headerTitle = entry.title %}
+
+{% if entry.styleImg|length %}
+    {% set headerImg = entry.styleImg.first().getUrl('resizeHeader') %}
+{% endif %}
+{% if entry.styleIcon %}
+    {% set headerIcon = entry.styleIcon %}
+{% endif %}
+{% if entry.styleIconAlign %}
+    {% set headerIconAlign = entry.styleIconAlign %}
+{% endif %}
+
+
+{% block content %}
+
+    {% include('matrix/_matrix.html') %}
+
+    {#PERSONS#}
+
+    {#{% set persons  = entry.relatedPersons %}#}
+    {#{% if persons|length %}#}
+        {#<section class="section">#}
+            {#<md-layout class="md-container md-centered" md-gutter="40">#}
+                {#<md-layout>#}
+                    {#<div class="wrapper">#}
+                        {#{% if true %}#}
+                            {#<div class="md-title section-title">{{ 'Key experts' | t }}</div>#}
+                        {#{% endif %}#}
+                    {#</div>#}
+                {#</md-layout>#}
+            {#</md-layout>#}
+            {#&#123;&#35;{% include('persons/_swiper-cards.html') %}&#35;&#125;#}
+            {#{% include "persons/_list-cards.html" %}#}
+            {#<md-layout class="md-container md-centered" md-gutter="40">#}
+                {#<md-layout>#}
+                    {#<div class="wrapper m-t-40">#}
+                        {#{% if true %}#}
+                            {#<md-button href="#0" class="md-raised md-white">Подобрать команду</md-button>#}
+                        {#{% endif %}#}
+                    {#</div>#}
+                {#</md-layout>#}
+            {#</md-layout>#}
+        {#</section>#}
+    {#{% endif %}#}
+
+    {#DOCS#}
+
+    {% set docs  = entry.relatedDocs %}
+    {% if docs|length %}
+        <section class="section bg-md-primary-no">
+            <md-layout class="md-container md-centered" md-gutter="40">
+                <md-layout>
+                    <div class="wrapper">
+                        {% if true %}
+                            <div class="md-title section-title">{{ 'Downloads' | t }}</div>
+                        {% endif %}
+                    </div>
+                </md-layout>
+            </md-layout>
+            {#{% include('docs/_swiper-cards.html') %}#}
+            {% include "docs/_list-cards.html" %}
+        </section>
+    {% endif %}
+
+    {#QUOTES#}
+
+    {#{% set quotes  = entry.relatedQuotes %}#}
+    {#{% if quotes|length %}#}
+        {#<section class="section">#}
+            {#<md-layout class="md-container md-centered" md-gutter="40">#}
+                {#<md-layout>#}
+                    {#<div class="wrapper">#}
+                        {#{% if true %}#}
+                            {#<div class="md-title section-title">{{ 'Quotes' | t }}</div>#}
+                        {#{% endif %}#}
+                    {#</div>#}
+                {#</md-layout>#}
+            {#</md-layout>#}
+            {#{% include('quotes/_swiper-full.html') %}#}
+        {#</section>#}
+    {#{% endif %}#}
+
+{% endblock %}

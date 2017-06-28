@@ -1,0 +1,34 @@
+<footer class="page-footer p-v-20">
+    <div class="ctr">
+        <div class="grid">
+            <div class="col-8_xs-12_sm-12_md-7_lg-8">
+                {% include "menus/_footer.html" %}
+            </div>
+            <div class="col-4_xs-12_sm-12_md-5_lg-4">
+                <nav class="nav-list--inline socials">
+                    <a href="{{ globalContacts.btiUrl }}" target="_blank">
+                        <md-icon class="md-size-1x">language</md-icon>{{ 'Baker Tilly International offices'|t }}</a>
+                </nav>
+            </div>
+        </div>
+        {#<div class="grid">#}
+        {#<div class="col-12">#}
+
+        {#</div>#}
+        {#</div>#}
+        <div class="grid">
+            <div class="col-8_xs-12">
+                <div class="md-caption text-ht">
+                    {#<div>{{ 'Confidentiality'|t }}:</div>#}
+                    {{ globalStrings.privacy }}
+                </div>
+            </div>
+            <div class="col-4_xs-12">
+                <div class="md-caption">
+                    <span class="copyright md-caption">{{ globalStrings.copyright }}<br/>{{ globalStrings.btiMember }}</span>
+                </div>
+                {% include "inc/_social-icons.html" %}
+            </div>
+        </div>
+    </div>
+</footer>

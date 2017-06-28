@@ -1,0 +1,36 @@
+{% cache globally %}
+<md-list>
+    {% set items = craft.entries.section('menus').search(('showMobile:1')).level(1) %}
+    {% for item in items %}
+        {% if item.menuItem.block|length and item.getDescendants().total() == 0 %}
+            {% set cUrl = '' %}
+            {% if item.menuItem.blocks[0].type != "Url" %}
+                {% set cUrl = subitem.menuItem.blocks[0].obj[0] is defined ? subitem.menuItem.blocks[0].obj[0].url %}
+                <md-list-item href="{{ cUrl }}">{{ item.title }}</md-list-item>
+            {% elseif item.menuItem.blocks[0].obj is defined %}
+                {% set cUrl = item.menuItem.blocks[0].obj %}
+                <md-list-item href="{{ cUrl }}">{{ item.title }}</md-list-item>
+            {% endif %}
+        {% elseif item.menuItem.block|length and item.getDescendants().total() != 0 %}
+            <md-list-item>
+                <span>{{ item.title }}</span>
+                <md-list-expand>
+                    <md-list>
+                        {% set subitems = item.getChildren() %}
+                        {% for subitem in subitems %}
+                            {% set cUrl = '' %}
+                            {% if subitem.menuItem.blocks[0].type != "Url" %}
+                                {% set cUrl = subitem.menuItem.blocks[0].obj[0] is defined ? subitem.menuItem.blocks[0].obj[0].url %}
+                            {% else %}
+                                {% set cUrl = subitem.menuItem.blocks[0].obj %}
+                            {% endif %}
+                            <md-list-item href="{{ cUrl }}">{{ subitem.title }}</md-list-item>
+                        {% endfor %}
+                    </md-list>
+                </md-list-expand>
+            </md-list-item>
+        {% endif %}
+    {% endfor %}
+</md-list>
+{% endcache %}
+

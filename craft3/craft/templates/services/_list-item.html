@@ -1,0 +1,19 @@
+<md-list-item>
+
+    <md-avatar>
+        <a href="{{ item.url }}"><div class="list-icon">{{ item.styleIcon ? item.styleIcon.inline }}</div></a>
+        {#<img src="https://placeimg.com/40/40/people/1" alt="People">#}
+    </md-avatar>
+
+    <a class="md-list-text-container t-color" href="{{ item.url }}" target="_blank">
+        <span class="list-title">{{ item.title }}</span>
+        <span>Что-то</span>
+        {#<p class="doc-type">{{ item.kind }} {{ item.size|filesize }}</p>#}
+    </a>
+
+    <md-button href="{{ item.url }}" target="_blank" class="md-icon-button md-list-action">
+        <md-icon class="md-primary">chevron_right</md-icon>
+    </md-button>
+    <md-divider class="md-inset"></md-divider>
+
+</md-list-item>

@@ -1,0 +1,6 @@
+{% set services = item.relatedServices.level(1) %}
+[
+{% for s in services %}
+{{ s.id }},
+{% endfor %}
+]

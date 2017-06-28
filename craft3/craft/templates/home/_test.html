@@ -1,0 +1,24 @@
+<html>
+<head></head>
+
+<body>
+
+{% set ser = craft.entries.section('services').with(['relatedPersons','relatedPersons.personPhoto.first','relatedPersons.relatedBranches','relatedPersons.relatedBranches.relatedPersons','relatedPersons.relatedBranches.relatedPersons.personPhoto.first','relatedProjects','relatedInfogs']).level(1) %}
+{#{% cache %}#}
+{% for item in ser %}
+    <li>{{ item.title }}</li>
+    {% for p in item.relatedPersons %}
+        {#<li>{{ p.title }}</li>#}
+        {#<li>{{ p.personPhoto[0].url ?? null }}</li>#}
+        {% for b in p.relatedBranches %}
+            <li>{{ b.title }}</li>
+            {% for pp in b.relatedPersons %}
+                {#<li>{{ pp.title }}</li>#}
+                {#<li>{{ pp.personPhoto[0].url ?? null }}</li>#}
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
+{% endfor %}
+{#{% endcache %}#}
+</body>
+</html>

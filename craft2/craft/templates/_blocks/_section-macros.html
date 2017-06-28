@@ -1,0 +1,106 @@
+{% macro start(block,current,headerTheme,innerTitle) %}
+
+{% set isService = (current.type == 'typeService') ? true : false %}
+{% set bTheme = block['blockTheme'] is defined and block.blockTheme|length ? 'md-theme-ct' ~ block.blockTheme[0].id ~' has-theme': '' %}
+
+{% if block['blockT'] is defined %}
+    {% if block.blockT == '0' %}
+        {% set bTheme = 'md-theme-' ~ headerTheme ~ ' has-theme' %}
+    {% elseif block.blockT == '1' %}
+        {% set bTheme = 'md-theme-dgrey has-theme' %}
+    {% elseif block.blockT == '2' %}
+        {% set bTheme = 'md-theme-lgrey has-theme' %}
+    {% endif %}
+{% endif %}
+
+{% if block['bg'] is defined %}
+    {% if block.bg == '0' %}
+        {% set bTheme = 'md-theme-' ~ headerTheme ~ ' has-theme' %}
+    {% elseif block.bg == '1' %}
+        {% set bTheme = 'md-theme-dgrey has-theme' %}
+    {% elseif block.bg == '2' %}
+        {% set bTheme = 'md-theme-lgrey has-theme' %}
+    {% elseif block.bg == '3' %}
+
+    {% endif %}
+{% endif %}
+
+{% set padding = block['blockPad'] is defined and block.blockPad|length ? block.blockPad[0].padClasses %}
+
+{% set bIcon = block['blockIcon'] is defined and block.blockIcon is not empty ? block.blockIcon %}
+{#{% if block.type == 'sectionExperst' or block.type == 'sectionProjects' %}#}
+    {% set eIcon = current.styleIcon2 ? current.styleIcon2 %}
+{#{% endif %}#}
+{% set bContainer = block['blockContainer'] is defined and block.blockContainer ? true : false %}
+{% set iconTheme = block['blockIconTheme'] is defined and block.blockIconTheme|length ? block.blockIconTheme[0] %}
+{% set mono = block['blockTheme'] is defined and block.blockTheme|length ? 'icon--multi' : 'icon--mono-0' %}
+
+
+{% set bTitle = block['blockTitle'] is defined and block.blockTitle is not empty ? block.blockTitle %}
+{% set bTitleIcon = block['blockTitleIcon'] is defined and block.blockTitleIcon is not empty ? block.blockTitleIcon %}
+
+
+<section class="section {{ bTheme }} {{ padding }}">
+
+    {% if iconTheme %}
+        <div class="media-container">
+            <div v-in-viewport
+                 class="block-icon bg-icon icons--themed {{ mono }} icon-color--{{ iconTheme.styleIconColor and bTheme != '' ? iconTheme.styleIconColor : 'ht' }} scale--{{ iconTheme.styleIconSize | default('x1') }} icon-sw--{{ iconTheme.styleIconLine | default('x1') }} icon-ani--draw align--{{ iconTheme.styleIconAlign | default('left') }} valign--{{ iconTheme.styleIconAlignV | default('bottom') }}">
+                {% if eIcon %}
+                    {{ eIcon.inline }}
+                {% elseif iconTheme.styleIcon %}
+                    {{ iconTheme.styleIcon.inline }}
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if bTitleIcon %}
+        <div class="ctr section-title t-color">
+            <md-icon class="md-size-2x">{{ bTitleIcon }}</md-icon>
+        </div>
+    {% else %}
+        {% if bTitle|length and not innerTitle and block.type != "sectionTabs" %}
+            {% if not innerTitle %}
+                <div class="ctr section-title t-color">
+                    {{ bTitle }}
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+
+
+    {% if bContainer %}
+    <div class="ctr section-content">{% endif %}
+
+        {% endmacro %}
+
+
+
+        {% macro finish(block,current,headerTheme,innerActions) %}
+
+        {% set bContainer = block['blockContainer'] is defined and block.blockContainer ? true : false %}
+        {% set bLink = block['blockLink'] is defined and block.blockLink|length ? block.blockLink : false %}
+        {% set bLinkText = block['blockLinkText'] is defined and block.blockLinkText|length ? block.blockLinkText : false %}
+        {% set bRequest = block['blockRequest'] is defined and block.blockRequest ? true : false %}
+
+        {% if bContainer %}</div>{% endif %}
+
+    {% if (bLink|length or bRequest) and not innerActions %}
+        <div class="ctr">
+            <div class="grid">
+                <div class="col-12 actions">
+                    {% for item in bLink %}
+                        <md-button class="md-raised" href="{{ item.url }}">{{ item.title }}</md-button>
+                    {% endfor %}
+                    {% if bRequest %}
+                        {% include 'inc/_request-button.html' %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</section>
+
+{% endmacro %}

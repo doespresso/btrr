@@ -1,0 +1,9 @@
+{% set bfilter = craft.entries.section('branches').level(1) %}
+<md-input-container>
+    <label for="movie">{{ 'Industry'|t }}</label>
+    <md-select name="fbranch" id="fbranch" v-model="fbranch">
+        {% for item in bfilter %}
+            <md-option value="b_{{ item.id }}">{{ item.title }}</md-option>
+        {% endfor %}
+    </md-select>
+</md-input-container>

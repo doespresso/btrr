@@ -1,0 +1,19 @@
+{% if bContainer == 1 %}
+</md-layout>
+</md-layout>
+{% endif %}
+{% if bLink|length or bRequest == 1 %}
+    <md-layout class="md-container md-centered" md-gutter="40">
+        <md-layout>
+            <div class="wrapper block-actions">
+                {% for item in bLink %}
+                    <md-button class="md-raised" href="{{ item.url }}">{{ item.title }}</md-button>
+                {% endfor %}
+                {% if bRequest ==1 %}
+                    <md-button class="md-raised" @click.native="toggleRightSidenav">{{ 'Send Request'|t }}</md-button>
+                {% endif %}
+            </div>
+        </md-layout>
+    {#</md-layout>#}
+{% endif %}
+</section>

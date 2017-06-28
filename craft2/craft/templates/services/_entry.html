@@ -1,0 +1,41 @@
+{% extends "_page.html" %}
+{% block content %}
+    <div class="full-width service">
+
+        <section class="section p-b-80">
+            <div class="ctr">
+                {% set subservices = entry.children %}
+                {% if globalService.service2c == 1 and subservices|length and (entry.Short|length or entry.fullText|length) %}
+                <div class="grid-2_xs-1_sm-1_md-1_lg-2">
+                {% else %}
+                    <div class="grid-1">
+                {% endif %}
+                        {% if entry.Short|length or entry.fullText|length %}
+                            <div class="col">
+                                <div class="section-title">{{ entry.Short }}</div>
+                                <div class="section-content html-content">{{ entry.fullText }}</div>
+                                <div class="actions">{% include "inc/_request-button.html" with {'label':'Send Request'|t}%}</div>
+                            </div>
+                        {% endif %}
+                {% if subservices|length %}
+                            <div class="col aside-column">
+                                {#{% if globalService.subservicesTitle|length %}#}
+                                    {#<div class="section-title primary-color">{{ globalService.subservicesTitle }}</div>#}
+                                    {#<div class="md-subheader">{{ globalService.subservicesTitle }}</div>#}
+                                {#{% endif %}#}
+                                <div class="section-content-lift">
+                                    {#<div class="md-subheader">{{ globalService.subservicesTitle }}</div>#}
+                                    {% include "services/_list-collapse-card.html" %}
+                                </div>
+                            </div>
+                {% endif %}
+                    </div>
+                </div>
+        </section>
+
+
+        {% set matrix = globalService.sMatrix %}
+        {% include('matrix/_matrix.html') %}
+
+    </div>
+{% endblock %}

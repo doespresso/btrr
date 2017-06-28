@@ -1,0 +1,14 @@
+<swiper class="section-content swiper--cards arrows--t-25p" :options="{'roundLengths': true,'slidesPerView':'auto','centeredSlides':true,
+        pagination: '.swiper-pagination',
+          paginationClickable: true,
+          nextButton: '.swiper-button-next',
+          prevButton: '.swiper-button-prev',}">
+    {% for item in projects %}
+        <swiper-slide>
+            {% include "projects/_card.html" %}
+        </swiper-slide>
+    {% endfor %}
+    <div class="swiper-pagination" slot="pagination"></div>
+    <div class="swiper-button-prev" slot="button-prev"></div>
+    <div class="swiper-button-next" slot="button-next"></div>
+</swiper>

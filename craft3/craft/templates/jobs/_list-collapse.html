@@ -1,0 +1,101 @@
+<div class="grid-1 section-content">
+    <div class="col">
+        {% for item in jobs %}
+            <collapse :selected=false class="md-collapse-card">
+                <div slot="collapse-header">
+                    <div class="md-collapse-header-text">
+                        <div class="md-title">{{ item.title }}</div>
+                        {% if item.jobDirection|length %}
+                            <div class="md-subhead">{{ item.jobDirection }}</div>{% endif %}
+                    </div>
+                    <md-icon>chevron_right</md-icon>
+                </div>
+                <div slot="collapse-body">
+                    <div class="md-collapse-body-content">
+                        <div class="section-title">{{ 'Цель позиции' }}</div>
+                        <div class="html-content">{{ item.jobTarget }}</div>
+                        <div class="section-title">{{ 'Основные обязанности' }}</div>
+                        <div class="html-content">{{ item.jobDuties }}</div>
+                        <div class="section-title">{{ 'Профессиональные требования' }}</div>
+                        <div class="html-content">{{ item.jobRequire }}</div>
+                        <div class="section-title">{{ 'Условия' }}</div>
+                        <div class="html-content">{{ item.jobConditions }}</div>
+                        {% if item.jobPerson|length %}
+                            {% set contact = item.jobPerson[0] %}
+                            <md-list>
+                                <md-subheader>{{ 'Менеджер позиции' }}</md-subheader>
+
+                                <md-list-item>
+                                    <md-icon>assignment_ind</md-icon>
+                                    <span>{{ contact.title }}</span>
+                                </md-list-item>
+                                <md-divider class="md-inset"></md-divider>
+
+                                {% if not (contact.contactTel1 or contact.contactTel2 or contact.contactTel3) %}
+                                    <md-list-item href="tel:{{ globalContacts.contactTel1 | replace (' ','') }}">
+                                        <md-icon>phone</md-icon>
+                                        <span>{{ globalContacts.contactTel1 }}</span>
+                                    </md-list-item>
+                                    <md-divider class="md-inset"></md-divider>
+                                {% endif %}
+                                {% if contact.contactTel1 %}
+                                    <md-list-item href="tel:{{ contact.contactTel1 | replace (' ','') }}">
+                                        <md-icon>phone</md-icon>
+                                        <span>{{ contact.contactTel1 }}</span>
+                                    </md-list-item>
+                                    <md-divider class="md-inset"></md-divider>
+                                {% endif %}
+                                {% if contact.contactTel2 %}
+                                    <md-list-item href="tel:{{ contact.contactTel2 | replace (' ','') }}">
+                                        <md-icon>phone</md-icon>
+                                        <span>{{ contact.contactTel2 }}</span>
+                                    </md-list-item>
+                                    <md-divider class="md-inset"></md-divider>
+                                {% endif %}
+                                {% if contact.contactSkype %}
+                                    <md-list-item href="{{ contact.contactSkype }}">
+                                        <md-icon
+                                                md-src="{{ craft.config.environmentVariables.baseUrl }}assets/icons/skype.svg"></md-icon>
+                                        <span>{{ contact.contactSkype }}</span>
+                                    </md-list-item>
+                                    <md-divider class="md-inset"></md-divider>
+                                {% endif %}
+                                <md-list-item
+                                        href="mailto:{{ contact.contactEmail ? contact.contactEmail : globalContacts.contactEmail }}">
+                                    <md-icon>send</md-icon>
+                                    <span>{{ contact.contactEmail ? contact.contactEmail : globalContacts.contactEmail }}</span>
+                                </md-list-item>
+                                <md-divider class="md-inset"></md-divider>
+
+                                {% if contact.facebook %}
+                                    <md-list-item href="{{ contact.facebook }}">
+                                        <md-icon
+                                                md-src="{{ craft.config.environmentVariables.baseUrl }}assets/icons/facebook.svg"></md-icon>
+                                        <span>{{ contact.facebook|trim("/")|split('/')|last }}</span>
+                                    </md-list-item>
+                                    <md-divider class="md-inset"></md-divider>
+                                {% endif %}
+                                {% if contact.twitter %}
+                                    <md-list-item href="{{ contact.twitter }}">
+                                        <md-icon
+                                                md-src="{{ craft.config.environmentVariables.baseUrl }}assets/icons/twitter.svg"></md-icon>
+                                        <span>{{ contact.twitter|trim("/")|split('/')|last }}</span>
+                                    </md-list-item>
+                                    <md-divider class="md-inset"></md-divider>
+                                {% endif %}
+                                {% if contact.linkedin %}
+                                    <md-list-item href="{{ contact.linkedin }}">
+                                        <md-icon
+                                                md-src="{{ craft.config.environmentVariables.baseUrl }}assets/icons/linkedin.svg"></md-icon>
+                                        <span>{{ contact.linkedin|trim("/")|split('/')|last }}</span>
+                                    </md-list-item>
+                                    <md-divider class="md-inset"></md-divider>
+                                {% endif %}
+                            </md-list>
+                        {% endif %}
+                    </div>
+                </div>
+            </collapse>
+        {% endfor %}
+    </div>
+</div>

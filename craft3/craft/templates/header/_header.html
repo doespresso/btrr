@@ -1,0 +1,75 @@
+{#{% cache %}#}
+<md-whiteframe md-elevation="0">
+    <header class="page-header has-ripple">
+        <md-toolbar class="height--{{ headerHeight }}">
+            <div class="media-container">
+                {% if headerImg is defined and not hBanners and not (currentType == 'typePublication' and current.publicationImgInList == '1') %}
+                    <div class="block-img backdrop-1" style="background-image:url({{ headerImg.getUrl() }})"></div>
+                {% endif %}
+                {% if headerIcon and not hBanners %}
+                    <div class="block-icon icons--themed icon-color--{{ headerIconColor }} icon-ani--{{ headerIconAnimation }} animated align--{{ headerIconAlign }} valign--{{ headerIconAlignV }} scale--{{ headerIconSize }} icon-sw--{{ headerIconLine }}">{{ headerIcon.inline }}</div>
+                {% endif %}
+                {% if hBanners|length %}
+                    {% set banners = hBanners %}
+                    <div class="block-banners header-banners">
+                        {% include "banners/_swiper-header.html" %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div id="navbar" class="is-fixed">
+                <div class="md-toolbar-container">
+                    <transition appear name="fadetodown">
+                        <div id="logo">
+                            <a href="{{ siteUrl }}" class="logo logo-l" style="background-image:url('{{ craft.config.environmentVariables.baseUrl }}assets/img/logo_full-w.svg')"></a>
+                            {#<a href="{{ siteUrl }}" class="logo logo-m" style="background-image:url('{{ craft.config.environmentVariables.baseUrl }}assets/img/logo-w.svg')"></a>#}
+                        </div>
+                    </transition>
+                    <span class="md-flex"></span>
+                    {#{{ include("menus/_navbar-menu.html") }}#}
+                    {{ include("menus/_navbar-menu-pages.html") }}
+                    <md-button class="md-icon-button" @click.native="showSearch">
+                        <md-icon>search</md-icon>
+                    </md-button>
+                    <md-menu md-direction="bottom left" md-size="3">
+                        {{ include("inc/_lang.html") }}
+                    </md-menu>
+                    <md-button class="md-icon-button md-hide-large-and-up" @click.native="toggleLeftSidenav">
+                        <md-icon>menu</md-icon>
+                    </md-button>
+                </div>
+            </div>
+
+
+            <div class="header-bottom">
+                {% if not hBanners %}
+                    <div class="grid title-holder">
+                        <div class="col_md-12">
+                            {% if backNav is defined %}
+                                <transition appear name="fadetoleft">{{ backNav }}</transition>
+                            {% endif %}
+                        </div>
+                        <div class="ctr col-container">
+                            <h1 class="header-title {{ entry is defined and (entry.type == 'typePublication' or entry.type == 'typeEvent') ? 'publication-title' }}">{% if headerTitle is defined %}{{ headerTitle }}{% else %}{{ siteName }}{% endif %}</h1>
+                        </div>
+                        <span class="col">&nbsp;</span>
+                    </div>
+                {% endif %}
+                {% if entry is defined and entry.type == 'typePublication' %}
+                    {% include "publications/_info.html" %}
+                {% endif %}
+                {#{% if entrySlug != 'homepage' %}#}
+                <div class="header-submenu-container">
+                    {#{{ include("menus/_submenu-header.html") }}#}
+                    {{ include("menus/_header-fab.html") }}
+                </div>
+                {#{% endif %}#}
+            </div>
+
+            {#<md-ink-ripple/>#}
+
+
+        </md-toolbar>
+    </header>
+</md-whiteframe>
+{#{% endcache %}#}

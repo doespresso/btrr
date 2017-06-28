@@ -1,0 +1,48 @@
+{% extends "_page.html" %}
+{% block content %}
+    {% if entry.type != 'typePersonFilter' %}
+        {% if entry.columnMatrix is defined and entry.columnMatrix.blocks|length %}
+            <div class="ctr">
+                <div class="grid">
+                    <div class="col-8_xs-12_sm-12_md-8">
+                        <div class="main-column">
+                            {% if entry.Short|length or entry.fullText|length %}
+                                <section class="section">
+                                    <div class="section-title">{{ entry.Short }}</div>
+                                    <div class="section-content html-content">{{ entry.fullText }}</div>
+                                </section>
+                            {% endif %}
+                            {% set matrix = entry.pageMatrix %}
+                            {% include('matrix/_matrix.html') %}
+                        </div>
+                    </div>
+                    <aside class="col-4_xs-12_sm-12_md-4">
+                        <div class="aside-column">
+                            {% set matrix = entry.columnMatrix %}
+                            {% include('matrix/_matrix.html') %}
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        {% else %}
+            <div class="main-column full-width">
+                {% if entry.Short|length or entry.fullText|length %}
+                    <section class="section">
+                        <div class="ctr">
+                            <div class="grid">
+                                <div class="col-12">
+                                    <div class="section-title">{{ entry.Short }}</div>
+                                    <div class="section-content html-content">{{ entry.fullText }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                {% endif %}
+                {% set matrix = entry.pageMatrix %}
+                {% include('matrix/_matrix.html') %}
+            </div>
+        {% endif %}
+    {% else %}
+        {% include "_filter/_index.html" %}
+    {% endif %}
+{% endblock %}

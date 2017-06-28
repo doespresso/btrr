@@ -1,0 +1,19 @@
+<md-list-item>
+    {% if item.personPhoto|length %}
+        {% set photo = item.personPhoto.first() %}
+        <md-avatar style="background-image:url('{{ photo.getUrl('resizePersonsList') }}')" alt="{{ item.personFirstname }} {{ item.personLastname }}')"></md-avatar>
+    {% endif %}
+    <div class="md-list-text-container">
+        <span>{{ item.personFirstname }} {{ item.personLastname }}</span>
+        <span>{{ item.personSpeakerShort ? item.personSpeakerShort : item.personStatus[0].groupTeamStatus ~ ' в Baker Tilly Russia'}}</span>
+    </div>
+    {% if item.personSpeakerBio or item.personBio%}
+    <md-list-expand>
+        <md-list>
+            <div class="md-list-item-content">
+                <div class="html-content">{{ item.personSpeakerBio is not empty ? item.personSpeakerBio : item.personBio}}</div>
+            </div>
+        </md-list>
+    </md-list-expand>
+    {% endif %}
+</md-list-item>

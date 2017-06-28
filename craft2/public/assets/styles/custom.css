@@ -1,0 +1,59 @@
+body {
+    background-color: #fcfcfc !important;
+}
+
+.md-list-item-container a {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    padding: inherit;
+    line-height: inherit;
+    min-height: inherit;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none !important;
+    color: inherit !important;
+}
+
+.container-lg {
+    background: #f0f0f0;
+    max-width: 1200px;
+    /*display: block;*/
+    margin: 0 auto;
+}
+
+/* cards */
+
+.md-card .md-title {
+    font-size: 20px;
+    line-height: 1.2;
+    margin-bottom: 0.2em;
+}
+
+.md-card .md-card-area {
+    flex-grow: 1;
+}
+
+.cards-holder-40 .md-layout .md-card {
+    min-width: 100%;
+    margin-bottom: 40px;
+}
+
+.is-fixed {
+    position: fixed !important;
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 0.5s, transform 0.5s;
+    transform: translateY(0);
+}
+
+.fade-enter, .fade-leave-to /* .fade-leave-active для <2.1.8 */
+{
+    opacity: 0;
+    transform: translateY(200px);
+}

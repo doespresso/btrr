@@ -1,0 +1,15 @@
+
+<div class="ctr">
+    <div class="article-info">
+        <div>
+            <span><md-icon>access_time</md-icon>{{ entry.postDate.localeDate() }}</span>
+        </div>
+        <span class="md-flex"></span>
+        <div>
+            <md-button href="{{ entry.publicationCategory[0].url }}">
+                <md-icon>arrow_forward</md-icon>
+                {{ entry.publicationCategory[0].title }}
+            </md-button>
+        </div>
+    </div>
+</div>

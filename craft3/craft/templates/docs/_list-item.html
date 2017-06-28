@@ -1,0 +1,12 @@
+<md-list-item href="{{ item.url }}" target="_blank">
+
+    <md-icon>insert_drive_file</md-icon>
+    <div class="md-list-text-container">
+        <span class="md-title">{{ item.title }}</span>
+        <span>{{ item.docShort }}</span>
+
+        <p class="file-info">{{ item.kind }} {{ item.size|filesize }}</p>
+    </div>
+    <md-icon>file_download</md-icon>
+    <md-divider></md-divider>
+</md-list-item>

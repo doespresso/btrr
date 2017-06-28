@@ -1,0 +1,7 @@
+[data-link^="#share-"]{
+  cursor:pointer;
+  opacity:0.87;
+  &:hover{
+    opacity:1;
+  }
+}

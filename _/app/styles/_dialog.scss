@@ -1,0 +1,14 @@
+.md-dialog {
+  @include layout-large-and-up {
+    max-width: 1000px;
+  }
+  @include layout-xsmall{
+    .md-dialog-title{
+      font-size:14px;
+      font-weight:500;
+    }
+  }
+  .dialog-title{
+    margin-bottom:24px;
+  }
+}

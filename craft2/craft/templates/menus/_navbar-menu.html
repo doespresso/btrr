@@ -1,0 +1,40 @@
+{% cache globally %}
+{% set topmenu_items = craft.entries.section('menus').search(('showTop:1')).level(1) %}
+<nav class="nav-menu" role="navigation">
+    {% for item in topmenu_items %}
+        {% if item.children.total() == 0 %}
+            {% set cUrl = '' %}
+            {% if item.menuItem|length and item.menuItem.blocks[0].type != "Url" and item.menuItem.blocks[0].obj %}
+                {% set cUrl = item.menuItem.blocks[0].obj[0] is defined ? item.menuItem.blocks[0].obj[0].url %}
+                <a href="{{ cUrl }}">{{ item.title }}</a>
+            {% elseif item.menuItem|length and item.menuItem.blocks[0].obj|length%}
+                {% set cUrl = item.menuItem.blocks[0].obj %}
+                <a href="{{ cUrl }}">{{ item.title }}</a>
+                {% else %}
+                <a href="#123">{{ item.title }}</a>
+            {% endif %}
+        {% elseif item.menuItem.block|length and item.getDescendants().total() != 0 %}
+            <md-menu md-size="auto" md-direction="bottom left" md-offset-y="60">
+                <a md-menu-trigger>{{ item.title }}</a>
+                <md-menu-content>
+                    {% set subitems = item.getChildren() %}
+                    {% for subitem in subitems %}
+                        {% set cUrl = '' %}
+                        {% if subitem.menuItem.blocks[0].type != "Url" and item.menuItem.blocks[0].obj %}
+                            {% set cUrl = subitem.menuItem.blocks[0].obj[0] is defined ? subitem.menuItem.blocks[0].obj[0].url %}
+                        {% else %}
+                            {% set cUrl = subitem.menuItem.blocks[0].obj %}
+                        {% endif %}
+                        {% if subitem.showTop == '1' %}<md-menu-item href="{{ cUrl }}">{{ subitem.title }}</md-menu-item>{% endif %}
+                    {% endfor %}
+                </md-menu-content>
+            </md-menu>
+        {% endif %}
+    {% endfor %}
+</nav>
+{% endcache %}
+
+
+
+
+

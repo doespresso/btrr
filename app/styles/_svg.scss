@@ -1,0 +1,16 @@
+[class*="-icon"]:not(.md-icon) svg {
+  line, path, rect, circle, polygon, ellipse, polyline {
+    fill: none !important;
+    vector-effect: non-scaling-stroke !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+  }
+}
+
+.card-icon {
+  svg {
+    line, path, rect, circle, polygon, ellipse, polyline {
+      stroke-width:2px!important;
+    }
+  }
+}

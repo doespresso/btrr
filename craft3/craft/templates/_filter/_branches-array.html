@@ -1,0 +1,6 @@
+{% set branches = item.relatedBranches %}
+[
+{% for s in branches %}
+{{ s.id }},
+{% endfor %}
+]

@@ -1,0 +1,8 @@
+<div class="grid-noGutter-equalHeight cards--banners">
+    {% set many = true %}
+    {% for banner in banners %}
+        <div class="col">
+            {% include "banners/_block-grid.html" %}
+        </div>
+    {% endfor %}
+</div>

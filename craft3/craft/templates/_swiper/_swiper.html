@@ -1,0 +1,45 @@
+{#&#123;&#35;{% set swiperData = false %}&#35;&#125;#}
+{#{% set classes = swiperClasses is defined ? 'section-content swiper--cards arrows--t-25p' ~ swiperClasses : 'section-content swiper--cards arrows--t-25p' %}#}
+{#{% set arrows = swiperArrows is defined and swiperArrows == 1 ? 'arrows-1' : 'arrows-0' %}#}
+
+{#&#123;&#35;{% set centered = swiperCentered is defined and swiperCentered == 1 ? 'true' : 'false' %}&#35;&#125;#}
+{#{% set centered = 'false' %}#}
+{#{% set loop = swiperLoop is defined and swiperLoop == 1 ? 'true' : 'false' %}#}
+{#{% set autoplay = swiperAutoplay is defined and swiperAutoplay == 1 ? 'autoplay:10000,' %}#}
+<swiper class="{{ classes is defined and classes is not empty ? 'section-content arrows--t-25p ' ~ classes : ' section-content arrows--t-25p ' }} {{ arrows is defined and arrows == 1 ? 'arrows-1' : 'arrows-0' }}"
+        :options="{
+        'roundLengths': true,
+        {#'slidesPerView':'{{ perview is defined and perview is not empty ? perview : 'auto' }}',#}
+        'centeredSlides':'{{ centered is defined and centered == 0 ? false : true }}',
+        loop:{{ loop }},
+        {{ autoplay is defined ? autoplay }}
+        {% if pagination is defined and pagination %}
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        {% endif %}
+        nextButton: '.swiper-button-next',prevButton: '.swiper-button-prev',
+        {% if spb is defined %}
+        {{ spb }}
+        {% endif %}
+        }">
+    {% if swiperData is defined and swiperData|length %}
+        {% for item in swiperData %}
+            <swiper-slide>
+                {% if cardTemplate is defined and cardTemplate is not empty %}
+                    {% include cardTemplate %}
+                {% endif %}
+            </swiper-slide>
+        {% endfor %}
+    {% endif %}
+    <div class="swiper-pagination" slot="pagination"></div>
+    <div class="swiper-button-prev" slot="button-prev">
+        <md-button class="md-icon-button t-color">
+            <md-icon>arrow_back</md-icon>
+        </md-button>
+    </div>
+    <div class="swiper-button-next" slot="button-next">
+        <md-button class="md-icon-button t-color">
+            <md-icon>arrow_forward</md-icon>
+        </md-button>
+    </div>
+</swiper>

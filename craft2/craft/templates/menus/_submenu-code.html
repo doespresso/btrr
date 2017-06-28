@@ -1,0 +1,56 @@
+{% if cot != 'category' and current.type == 'typePerson' %}
+    {% set pcat = current.personStatus[0] %}
+    {% set menu_item = craft.entries.section('menus').relatedTo({
+    targetElement: pcat,
+    field: 'menuItem.obj'
+    }) %}
+{% elseif cot != 'category' and current.type == 'typePublication' %}
+    {% set pcat = current.publicationCategory[0] %}
+    {% set menu_item = craft.entries.section('menus').relatedTo({
+    targetElement: pcat,
+    field: 'menuItem.obj'
+    }) %}
+{% else %}
+    {% set menu_item = craft.entries.section('menus').relatedTo({
+    targetElement: current,
+    field: 'menuItem.obj'
+    }) %}
+{% endif %}
+
+{% if menu_item|length>0 %}
+    {{ menu_item.count }}
+    {% set menu_item = menu_item.last() %}
+    | current: {{ menu_item.title }}
+    {{ menu_item.level }}
+    {% if menu_item.parent|length %}
+        {% set menu_item_parent = menu_item.parent %}
+        | parent: {{ menu_item_parent.title }} / {{ menu_item_parent.showInSub}}
+        {% if menu_item_parent.showInSub == 'children' %}
+            {% set subitems =  menu_item_parent.children %}
+            {% for menu_subitem in subitems %}
+                | <a href="{{ menu_subitem.menuItem.blocks[0].obj[0].url is defined ? menu_subitem.menuItem.blocks[0].obj[0].url : menu_subitem.menuItem.blocks[0].obj }}"
+                     class="{{ menu_subitem.id == menu_item.id ? 'md-body-2' }}">{{ menu_subitem.title }}</a>
+            {% endfor %}
+        {% endif %}
+    {% else %}
+        no parent
+    {% endif %}
+{% else %}
+    no menu item
+{% endif %}
+
+
+    {#<md-tabs>#}
+    {#<md-tab id="movies" md-label="Movies" v-on:click.capture="tabb()">#}
+    {#asd#}
+    {#</md-tab>#}
+
+    {#<md-tab id="music" md-label="Music" v-on:click.native="tabb">#}
+    {#</md-tab>#}
+
+    {#<md-tab id="books" md-label="Books" v-on:click.prevent="tabb">#}
+    {#</md-tab>#}
+
+    {#<md-tab id="pictures" md-label="Pictures">#}
+    {#</md-tab>#}
+{#</md-tabs>#}

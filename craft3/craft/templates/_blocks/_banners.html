@@ -1,0 +1,12 @@
+{% set banners = block.blockContent|length ? block.blockContent %}
+{% if banners is defined and banners|length > 1 and block.blockShowAs == '0' %}
+    {% include "banners/_swiper.html" with {'banners':banners} %}
+{% if banners is defined and banners|length > 1 and block.blockShowAs == '1' %}
+    grid
+{% elseif block.blockContent|length == 1 %}
+    {% set many = false %}
+    {% set banner = banners[0] %}
+    {% include "banners/_block.html" with {'banner':banner} %}
+{% else %}
+    {% set be = true %}
+{% endif %}

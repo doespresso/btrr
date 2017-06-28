@@ -1,0 +1,114 @@
+{% if item.cardDirect %}
+    {% set dl =  item.publicationRedirect %}
+    {% set dd =  item.publicationDoc %}
+    {% if dl|length %}
+        {% set href = dl[0].url %}
+    {% elseif dd|length %}
+        {% set href = dd[0].url %}
+    {% else %}
+        {% set href = item.url %}
+    {% endif %}
+{% else %}
+    {% set href = item.url %}
+{% endif %}
+<div class="col{{ item.cardWidth2 == 1 and not nox2 ? '-8_xs-12_sm-6_md_4_lg-8' : '-4_xs-12_sm-6_md_4_lg-4' }}">
+    {% if item.cardFullColor and item.cardImg|length %}
+        <md-card
+                class="card--news {{ item.cardColor|length and item.cardFullColor ? 'md-primary' }} {{ item.cardColor|length ? 'themed' }} filled"
+                md-with-hover
+                md-theme="{{ item.cardColor|length ? 'ct'~item.cardColor[0].id : 'ct-dgrey' }} ">
+            <md-card-media-cover md-text-scrim>
+                {% if item.cardImg|length or item.cardIcon %}
+                    {% if item.cardImg|length %}
+                        {% set photo = item.cardImg[0].getUrl('resizeNewsList') %}
+                    {% else %}
+                        {% set photo = '' %}
+                    {% endif %}
+                    <md-card-media class="has-ripple backdrop-{{ item.cardImg|length ? '1' : '0' }}"
+                                   style="background-image:url({{ photo }})">
+                        <a class="cover-link" href="{{ href }}">
+                            {% if item.cardIcon %}
+                                <div class="card-icon">{{ item.cardIcon.inline }}</div>
+                            {% endif %}
+                        </a>
+                        <md-ink-ripple/>
+                    </md-card-media>
+                {% endif %}
+                <md-card-area class="md-flex">
+                    <md-card-content>
+                        {% if hideDate != 1 %}
+                            <div class="md-subhead date">{{ item.postDate.localeDate() }}</div>{% endif %}
+                        <h3 class="md-title"><a href="{{ href }}">{{ item.title }}</a></h3>
+                        {% if hideShort != 1 %}
+                            <div class="md-subhead">{{ item.cardAnons }}</div>{% endif %}
+                    </md-card-content>
+                    <md-card-actions>
+                        <md-button
+                                href="{{ item.publicationCategory[0].url ?? null }}">{{ item.publicationCategory[0].title ?? null }}</md-button>
+                        <span class="md-flex"></span>
+                        <md-button class="md-icon-button" href="{{ href }}">
+                            {% if item.videoCodeYT|length %}
+                                <md-icon>play_arrow</md-icon>
+                            {% elseif item.eventOn=='1' %}
+                                <md-icon>event</md-icon>
+                            {% elseif item.pageMatrix.type('sectionDocs')|length %}
+                                <md-icon>attach_file</md-icon>
+                            {% else %}
+                                <md-icon>chevron_right</md-icon>
+                            {% endif %}
+                        </md-button>
+                    </md-card-actions>
+                </md-card-area>
+
+            </md-card-media-cover>
+        </md-card>
+    {% else %}
+        <md-card
+                class="card--news {{ item.cardColor|length and item.cardFullColor ? 'md-primary' }} {{ item.cardColor|length ? 'themed' }}"
+                md-with-hover
+                md-theme="{{ item.cardColor|length ? 'ct'~item.cardColor[0].id }}">
+            <md-card-area class="md-flex">
+                {% if item.cardImg|length or item.cardIcon %}
+                    {% if item.cardImg|length %}
+                        {% set photo = item.cardImg[0].getUrl('resizeNewsList') %}
+                    {% else %}
+                        {% set photo = '' %}
+                    {% endif %}
+                    <md-card-media class="has-ripple backdrop-{{ item.cardImg|length ? '0' }}"
+                                   style="background-image:url({{ photo }})">
+                        <a class="cover-link" href="{{ href }}">
+                            {% if item.cardIcon %}
+                                <div class="card-icon">{{ item.cardIcon.inline }}</div>
+                            {% endif %}
+                        </a>
+                        <md-ink-ripple/>
+                    </md-card-media>
+                {% endif %}
+                <md-card-content>
+                    {% if hideDate != 1 %}
+                        <div class="md-subhead date">{{ item.postDate.localeDate() }}</div>{% endif %}
+                    <h3 class="md-title"><a href="{{ href }}">{{ item.title }}</a></h3>
+                    {% if hideShort != 1 %}
+                        <div class="md-subhead">{{ item.cardAnons }}</div>{% endif %}
+                </md-card-content>
+            </md-card-area>
+            <md-card-actions>
+                <md-button
+                        href="{{ item.publicationCategory[0].url ?? null }}">{{ item.publicationCategory[0].title ?? null }}</md-button>
+                <span class="md-flex"></span>
+                <md-button class="md-icon-button" href="{{ href }}">
+                    {% if item.videoCodeYT|length %}
+                        <md-icon>play_arrow</md-icon>
+                    {% elseif item.eventOn=='1' %}
+                        <md-icon>event</md-icon>
+                    {% elseif item.pageMatrix.type('sectionDocs')|length %}
+                        <md-icon>attach_file</md-icon>
+                    {% else %}
+                        <md-icon>chevron_right</md-icon>
+                    {% endif %}
+                </md-button>
+            </md-card-actions>
+        </md-card>
+
+    {% endif %}
+</div>

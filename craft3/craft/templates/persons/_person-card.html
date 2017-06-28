@@ -1,0 +1,18 @@
+<md-card class="card--person m-b-40">
+    <md-card-area v-cloak>
+        {% if person.personPhoto|length %}
+            {% set photo = person.personPhoto.first() %}
+            <md-card-media class="photo-aspect" style="background-image:url('{{ photo.getUrl('resizePersonsList') }}')"></md-card-media>
+        {% endif %}
+
+        <md-card-header>
+            <h1 class="md-title">{{ person.personFirstname }} {{ person.personLastname }}</h1>
+            <div class="md-subhead">{{ person.personStatusOver ? person.personStatusOver : person.personStatus.first().groupTeamStatus }}<br/>{{ person.relatedServices|length ? person.relatedServices[0].title }}</div>
+            {#<div class="md-subhead">{{ person.personPosition }}</div>#}
+        </md-card-header>
+        <md-card-content class="no-p">
+            {% set contact = person %}
+            {% include "contacts/_list.html" %}
+        </md-card-content>
+    </md-card-area>
+</md-card>

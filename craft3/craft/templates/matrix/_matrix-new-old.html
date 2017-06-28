@@ -1,0 +1,450 @@
+{% import "_blocks/_section-macros.html" as part %}
+{% if matrix is not defined %}
+    {% set matrix = entry.pageMatrix %}
+{% endif %}
+
+{% if matrix is defined and matrix.blocks.count>0 %}
+    {% set nox2 = true %}
+
+
+    {% set tabs = matrix.type('sectionTabs') ? true : false %}
+    {#TABS#}
+    {#TABS#}
+    {#TABS#}
+    {#TABS#}
+    {% if tabs %}
+        {% set tabscount = 0 %}
+        {% set tabs_content %}
+            {% for block in matrix %}
+                {% set bTitle = block['blockTitle'] is defined and block.blockTitle is not empty ? block.blockTitle %}
+                {% set intabs = block['inTabs'] is defined and block.inTabs ? true : false %}
+                {% if intabs %}
+                    {% set be = false %}
+                    {% set innerTitle = false%}
+                    {% set innerActions = false%}
+
+                    {% set hideDate= block['blockHideDate'] is defined and block.blockHideDate == 1 ? 1 : 0 %}
+                    {% set hideShort= block['blockHideShort'] is defined and block.blockHideShort == 1 ? 1 : 0 %}
+                    {% set tmpl = block['blockTemplate'] is defined and block.blockTemplate is not empty ? block.blockTemplate : '' %}
+                    {% set bLink = block['blockLink'] is defined and block.blockLink|length ? block.blockLink : false %}
+                    {% set bLinkText = block['blockLinkText'] is defined and block.blockLinkText|length ? block.blockLinkText : false %}
+                    {% set bRequest = block['blockRequest'] is defined and block.blockRequest ? true : false %}
+
+
+                    {% set section_body %}
+                        {% if block.type == "sectionDocs" %}
+                            {% if block.blockSource == 'added' and block.blockContent|length %}
+                                {% set docs = block.blockContent|length ? block.blockContent %}
+                            {% elseif block.blockSource == 'related' %}
+                                {#{% set docs = entry.relatedDocs is defined and entry.relatedDocs|length ? entry.relatedDocs %}#}
+                                {% set docs = entry['relatedDocs'] is defined and entry.relatedDocs|length ? entry.relatedDocs %}
+                            {% endif %}
+                            {% if docs is defined and docs|length %}
+                                {% include "_blocks/_docs.html" %}
+                            {% else %}
+                                {% set be = true %}
+                            {% endif %}
+                        {% endif %}
+
+                        {% if block.type == "sectionNav" %}
+                            {% set entryIcons = false %}
+                            {% if tmpl == '_list.html' or tmpl == '_list-white.html' or tmpl == '_list-small.html' or tmpl == '_list-small-white.html' %}
+                                {% set innerTitle = true %}
+                                {% set sectionTitle = bTitle %}
+                            {% endif %}
+                            {% if block.blockSource == 'added' %}
+                                {% set navs = block.blockContent|length ? block.blockContent %}
+                            {% elseif block.blockSource == 'services' %}
+                                {% set navs = craft.entries.section('services').level(1).id('not ' ~ entry.id) %}
+                                {% set entryIcons = true %}
+                            {% elseif block.blockSource == 'branches' %}
+                                {% set entryIcons = true %}
+                                {% set navs = craft.entries.section('branches').level(1).id('not ' ~ entry.id) %}
+                            {% elseif block.blockSource == 'same' and snav|length %}
+                                {% set navs = snav %}
+                            {% elseif block.blockSource == 'children' and cnav|length %}
+                            {% else %}
+                                {% set navs = cnav %}
+                            {% endif %}
+                            {% if block['blockShowShort'] is defined and block.blockShowShort == 1 %}
+                                {% set showShort = true %}
+                            {% else %}
+                                {% set showShort = false %}
+                            {% endif %}
+                            {% if block['blockShowCurrent'] is defined and block.blockShowCurrent == 1 %}
+                                {% set showCurrent = true %}
+                            {% else %}
+                                {% set showCurrent = false %}
+                            {% endif %}
+                            {% if navs is defined %}
+                                {% include "_blocks/_nav.html" %}
+                            {% else %}
+                                {% set be = true %}
+                            {% endif %}
+                        {% endif %}
+
+                        {% if block.type == "sectionProjects" %}
+
+                            {% if block.blockSource == 'bytag' %}
+                                {% set projects = craft.entries.section('projects').relatedTo(tagged).limit(10) %}
+                            {% elseif block.blockSource == 'related' and entry.relatedProjects|length %}
+                                {% set projects = entry['relatedProjects'] is defined and entry.relatedProjects|length ? entry.relatedProjects %}
+                            {% elseif block.blockSource == 'added' and block.blockContent|length %}
+                                {% set projects = block.blockContent|length ? block.blockContent %}
+                            {% else %}
+                                {% set projects = craft.entries.section('projects').relatedTo(tagged).limit(10) %}
+                            {% endif %}
+
+
+                            {% if projects is defined %}
+                                {% include "_blocks/_projects.html" %}
+                            {% else %}
+                                {% set be = true %}
+                            {% endif %}
+
+                        {% endif %}
+
+                        {#{% if block.type == "sectionSubservices" and entry.children.total() > 0 %}#}
+                        {#{% include "_blocks/_subservices.html" %}#}
+                        {#{% endif %}#}
+
+                        {% if block.type == "sectionExperts" %}
+                            {% if block.blockSource == 'related' and entry.relatedPersons|length %}
+                                {% set persons = entry['relatedPersons'] is defined and entry.relatedPersons|length ? entry.relatedPersons %}
+                            {% elseif block.blockSource == 'added' and block.blockContent|length %}
+                                {% set persons = block.blockContent|length ? block.blockContent %}
+                            {% endif %}
+                            {% if persons is defined %}
+                                {% include "_blocks/_persons.html" %}
+                            {% else %}
+                                {% set be = true %}
+                            {% endif %}
+                        {% endif %}
+                    {% endset %}
+
+                    {% if not be %}
+                        {% set tabscount = tabscount + 1 %}
+                        <md-tab id="t{{ block.id }}"
+                                md-label="{{ block.blockTitle ? block.blockTitle : 'See also'|t }}">
+                            {{ part.start(block,current,headerTheme,innerTitle,innerActions) }}
+                            {{ section_body }}
+                            {{ part.finish(block,current,headerTheme,innerActions) }}
+                        </md-tab>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endset %}
+    {% endif %}
+    {#НЕ ТАБОВЫЕ БЛОКИ#}
+    {#НЕ ТАБОВЫЕ БЛОКИ#}
+    {#НЕ ТАБОВЫЕ БЛОКИ#}
+    {#НЕ ТАБОВЫЕ БЛОКИ#}
+    {#НЕ ТАБОВЫЕ БЛОКИ#}
+    {#НЕ ТАБОВЫЕ БЛОКИ#}
+
+    {% for block in matrix %}
+        {% set be = false %}
+        {% set intabs = block['inTabs'] is defined and block.inTabs == 1 ? true : false %}
+        {% set hideDate= block['blockHideDate'] is defined and block.blockHideDate == 1 ? 1 : 0 %}
+        {% set hideShort= block['blockHideShort'] is defined and block.blockHideShort == 1 ? 1 : 0 %}
+        {% set tmpl = block['blockTemplate'] is defined and block.blockTemplate is not empty ? block.blockTemplate : '' %}
+        {% set bTitle = block['blockTitle'] is defined and block.blockTitle is not empty ? block.blockTitle %}
+        {% set bLink = block['blockLink'] is defined and block.blockLink|length ? block.blockLink : false %}
+        {% set bLinkText = block['blockLinkText'] is defined and block.blockLinkText|length ? block.blockLinkText : false %}
+        {% set bRequest = block['blockRequest'] is defined and block.blockRequest ? true : false %}
+
+        {% set innerTitle = false%}
+        {% set innerActions = false%}
+
+        {% set section_body %}
+
+            {% if block.type == "sectionDocs" %}
+                {% if block.blockSource == 'added' and block.blockContent|length %}
+                    {% set docs = block.blockContent|length ? block.blockContent %}
+                {% elseif block.blockSource == 'related' %}
+                    {#{% set docs = entry.relatedDocs is defined and entry.relatedDocs|length ? entry.relatedDocs %}#}
+                    {% set docs = entry['relatedDocs'] is defined and entry.relatedDocs|length ? entry.relatedDocs %}
+                {% endif %}
+                {% if docs is defined and docs|length %}
+                    {% include "_blocks/_docs.html" %}
+                {% else %}
+                    {% set be = true %}
+                {% endif %}
+            {% endif %}
+
+            {% if block.type == "sectionNav" %}
+                {% set entryIcons = false %}
+                {% if tmpl == '_list.html' or tmpl == '_list-white.html' or tmpl == '_list-small.html' or tmpl == '_list-small-white.html' %}
+                    {% set innerTitle = true %}
+                    {% set sectionTitle = bTitle %}
+                {% endif %}
+                {% if block.blockSource == 'added' %}
+                    {% set navs = block.blockContent|length ? block.blockContent %}
+                {% elseif block.blockSource == 'services' %}
+                    {% set entryIcons = true %}
+                    {% set navs = craft.entries.section('services').level(1).id('not ' ~ entry.id) %}
+                {% elseif block.blockSource == 'branches' %}
+                    {% set entryIcons = true %}
+                    {% set navs = craft.entries.section('branches').level(1).id('not ' ~ entry.id) %}
+                {% elseif block.blockSource == 'same' and snav|length %}
+                    {% set navs = snav %}
+                {% elseif block.blockSource == 'children' and cnav|length %}
+                {% else %}
+                    {% set navs = cnav %}
+                {% endif %}
+                {% if block['blockShowShort'] is defined and block.blockShowShort == 1 %}
+                    {% set showShort = true %}
+                {% else %}
+                    {% set showShort = false %}
+                {% endif %}
+                {% if block['blockShowCurrent'] is defined and block.blockShowCurrent == 1 %}
+                    {% set showCurrent = true %}
+                {% else %}
+                    {% set showCurrent = false %}
+                {% endif %}
+                {% if navs is defined %}
+                    {% include "_blocks/_nav.html" %}
+                {% else %}
+                    {% set be = true %}
+                {% endif %}
+            {% endif %}
+
+            {% if block.type == "sectionPublications" and cot != 'category' %}
+                {% set nox2 = false %}
+                {% set news = [] %}
+                {% set perpage = block.blockPerPage is not empty ? block.blockPerPage : 3 %}
+                {% if block.blockSource == 'last' %}
+                    {% set news = craft.entries({
+                    section:'publications',
+                    order:'cardIsSticky desc, postDate desc',
+                    with:['cardColor','cardImg','publicationCategory']
+                    }).limit(perpage)
+                    %}
+                {% elseif block.blockSource == 'added' and block.blockContent|length %}
+                    {% set news = block.blockContent|length ? block.blockContent %}
+                {% elseif block.blockSource == 'tagged' %}
+                    {#{% set news = craft.entries.section('publications').relatedTo(tagged).id('not ' ~ entry.id).limit(perpage) %}#}
+
+                    {% set news = craft.entries({
+                    section:'publications',
+                    relatedTo:tagged,
+                    id:'not '~entry.id,
+                    with:['cardColor','cardImg','publicationCategory']
+                    }).limit(perpage) %}
+
+                    {% if news|length<2 %}
+                        {% set news = craft.entries({
+                        section:'publications',
+                        id:'not '~entry.id,
+                        with:['cardColor','cardImg','publicationCategory']
+                        }).limit(perpage) %}
+                    {% endif %}
+                {% endif %}
+                {% if news is defined %}
+                    {% include "_blocks/_publications.html" %}
+                {% else %}
+                    {% set be = true %}
+                {% endif %}
+            {% endif %}
+
+            {% if block.type == "sectionProjects" %}
+                {% if block.blockSource == 'bytag' %}
+                    {% set projects = craft.entries.section('projects').relatedTo(tagged).limit(10) %}
+                {% elseif block.blockSource == 'related' and entry.relatedProjects|length %}
+                    {% set projects = entry['relatedProjects'] is defined and entry.relatedProjects|length ? entry.relatedProjects %}
+                {% elseif block.blockSource == 'added' and block.blockContent|length %}
+                    {% set projects = block.blockContent|length ? block.blockContent %}
+                {% else %}
+                    {% set projects = craft.entries.section('projects').relatedTo(tagged).limit(10) %}
+                {% endif %}
+
+
+                {% if projects is defined %}
+                    {% include "_blocks/_projects.html" %}
+                {% else %}
+                    {% set be = true %}
+                {% endif %}
+            {% endif %}
+
+            {% if block.type == "sectionJobs" %}
+                {% set jobs = block.blockContent|length ? block.blockContent %}
+                {% if jobs is defined and jobs|length %}
+                    {% set templ = tmpl is defined and tmpl is not empty ? "jobs/" ~ tmpl : "jobs/_list-collapse.html" %}
+                    {% include templ %}
+                {% else %}
+                    {% set be = true %}
+                {% endif %}
+            {% endif %}
+
+            {% if block.type == "sectionQuotes" %}
+                {% if block.blockSource == 'tagged' %}
+                    {% set qts = craft.entries.section('qts').relatedTo(tagged).limit(5) %}
+                {% elseif block.blockSource == 'added' and block.blockContent|length %}
+                    {% set qts = block.blockContent %}
+                {% elseif block.blockSource == 'related' %}
+                    {% set qts = entry.relatedQuotes is defined and entry.relatedQuotes|length ? entry.relatedQuotes %}
+                {% else %}
+                {% endif %}
+
+                {% if qts is defined and qts|length %}
+                    {% set templ = "quotes/_swiper.html" %}
+                    {% include templ %}
+                {% elseif block['getRandom'] is defined and block.getRandom == 1 %}
+                    {% set qts = craft.entries.section('qts').quoteFallback(1).limit(3) %}
+                    {% set templ = "quotes/_swiper.html" %}
+                    {% include templ %}
+                {% else %}
+                    {% set be = true %}
+                {% endif %}
+            {% endif %}
+
+            {% if block.type == "sectionInfogs" %}
+                {% if block.blockSource == 'bytag' %}
+                    {% set infogs = craft.entries.section('infogs').relatedTo(tagged).limit(10) %}
+                {% elseif block.blockSource == 'related' and entry.relatedInfogs|length %}
+                    {% set infogs = entry['relatedInfogs'] is defined and entry.relatedInfogs is defined and entry.relatedInfogs|length ? entry.relatedInfogs %}
+                {% elseif block.blockSource == 'added' and block.blockContent|length %}
+                    {% set infogs = block.blockContent|length ? block.blockContent %}
+                {% else %}
+                    {% set infogs = craft.entries.section('infogs').relatedTo(tagged).limit(10) %}
+                {% endif %}
+                {% if infogs is defined and infogs|length %}
+                    {% include "_blocks/_infogs.html" %}
+                {% else %}
+                    {% set be = true %}
+                {% endif %}
+
+            {% endif %}
+
+            {% if block.type == "sectionExperts" %}
+                {% if block.blockSource == 'related' and entry.relatedPersons|length %}
+                    {% set persons = entry['relatedPersons'] is defined and entry.relatedPersons|length ? entry.relatedPersons %}
+                {% elseif block.blockSource == 'added' and block.blockContent|length %}
+                    {% set persons = block.blockContent|length ? block.blockContent %}
+                {% endif %}
+                {% if persons is defined %}
+                    {% include "_blocks/_persons.html" %}
+                {% else %}
+                    {% set be = true %}
+                {% endif %}
+            {% endif %}
+
+            {% if block.type == "sectionOffices" and block.blockContent|length %}
+                {% set offices = block.blockContent|length ? block.blockContent %}
+                {% if offices is defined %}
+                    {% set templ = "offices/_list-cards.html" %}
+                    {% include templ %}
+                {% else %}
+                    {% set be = true %}
+                {% endif %}
+            {% endif %}
+
+            {% if block.type == "sectionBanners" %}
+                {% set banners = block.relatedItems|length ? block.relatedItems %}
+                {% if banners is defined and banners|length > 1 %}
+                    {% include "banners/_swiper.html" with {'banners':banners} %}
+                {% elseif block.relatedItems|length == 1 %}
+                    {% set many = false %}
+                    {% set banner = banners[0] %}
+                    {% include "banners/_block.html" with {'banner':banner} %}
+                {% else %}
+                    {% set be = true %}
+                {% endif %}
+
+            {% endif %}
+
+            {% if block.type == "sectionHtml" and (block.blockTitle or block.blockContent) %}
+                {{ block.blockContent }}
+            {% endif %}
+
+            {% if block.type == "sectionHtmlCard" and (block.blockTitle or block.blockContent) %}
+                <div class="ctr">
+                    <md-card class="html-card">
+                        <md-card-area>
+                            <md-card-header>
+                                {% if bTitle is not empty %}
+                                    <div class="md-title">{{ bTitle }}</div>{% endif %}
+                                {% if block.blockShort is not empty %}
+                                    <div class="md-subhead">{{ block.blockShort }}</div>{% endif %}
+                            </md-card-header>
+                            <hr class="line"/>
+                            <md-card-content>
+                                <div class="html-content">{{ block.blockContent }}</div>
+                            </md-card-content>
+                        </md-card-area>
+                        {% if bLink|length or bRequest %}
+                            <md-card-actions>
+                                {% for item in bLink %}
+                                    <md-button href="{{ item.url }}">{{ item.title }}</md-button>
+                                {% endfor %}
+                                {% if bRequest %}
+                                    {% include 'inc/_request-button-card.html' %}
+                                {% endif %}
+                                <span class="md-flex"></span>
+                            </md-card-actions>
+                        {% endif %}
+                    </md-card>
+                </div>
+
+                {% set innerTitle = true %}
+                {% set innerActions = true %}
+            {% endif %}
+
+            {% if block.type == "sectionImages" and block.blockContent|length %}
+                {% set images = block.blockContent %}
+                {% set labels = block.blockLabels %}
+                {% set backdrop = block.blockBackdrop %}
+
+                {% if block.blockContent|length == 1 %}
+                    {% set img = images[0] %}
+                    {% include "images/_image.html" %}
+                {% elseif block.blockContent > 1 %}
+                    {% include "images/_swiper.html" %}
+                {% else %}
+                    {% set be = true %}
+                {% endif %}
+            {% endif %}
+
+            {% if block.type == "sectionVideo" and block.blockContent|length %}
+                {% set videos = block.blockContent %}
+                {% set labels = block.blockLabels %}
+
+                {% set video = videos[0] %}
+                {% include "video/_simple.html" %}
+
+            {% endif %}
+
+            {% if block.type == "sectionTabs" %}
+
+            {% endif %}
+
+        {% endset %}
+
+        {% if not be and not (tabs and intabs and tabscount > 1) %}
+            {% if block.type != "sectionDivider" %}
+                {% set section_start %}
+                    {{ part.start(block,current,headerTheme,innerTitle,innerActions) }}
+                {% endset %}
+                {% set section_end %}
+                    {{ part.finish(block,current,headerTheme,innerActions) }}
+                {% endset %}
+            {% endif %}
+            {% if block.type != "sectionTabs" %}
+                {% if block.type == "sectionDivider" %}
+                    <hr class="line-{{ block.blockContainer }}"/>
+                {% else %}
+                    {{ section_start }}
+                    {{ section_body }}
+                    {{ section_end }}
+                {% endif %}
+            {% else %}
+                <section class="tabs-section">
+                    <md-tabs class="md-transparent tabs-inline" md-fixed>
+                        {{ tabs_content }}
+                    </md-tabs>
+                </section>
+            {% endif %}
+        {% endif %}
+
+    {% endfor %}
+{% endif %}

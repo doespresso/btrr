@@ -1,0 +1,40 @@
+{% set dtitle = item.projectTitle %}
+{% set dcontent = item.projectDescription %}
+
+{% if dcontent|length %}
+<md-card class="mb-mini card--project" @click.native="openDialog('{{ 'dialog'~item.id }}')" id="{{ 'd'~item.id }}" md-with-hover>
+{% else %}
+    <md-card class="mb-mini card--project">
+{% endif %}
+        <md-card-header class="md-flex">
+            <md-card-header-text>
+                <div class="md-title">{{ item.title }}</div>
+            </md-card-header-text>
+        </md-card-header>
+        <md-card-actions>
+            {#<md-button class="md-primary">{{ 'Send Request' | t }}</md-button>#}
+            <span class="md-flex"></span>
+            {% if dcontent|length %}
+                <md-button class="md-icon-button">
+                    <md-icon>open_in_new</md-icon>
+                </md-button>
+            {% endif %}
+        </md-card-actions>
+        {#<md-ink-ripple/>#}
+    </md-card>
+
+    {% if dcontent|length %}
+        <md-dialog ref="{{ 'dialog'~item.id }}">
+            {#<md-dialog-title></md-dialog-title>#}
+
+            <md-dialog-content>
+                <div class="md-body-2 dialog-title">{{ dtitle }}</div>
+                <div class="html-content">{{ dcontent }}</div>
+            </md-dialog-content>
+
+            <md-dialog-actions>
+                {#{% include "inc/_request-button-card.html" %}#}
+                <md-button @click.native="closeDialog('{{ 'dialog'~item.id }}')">{{ 'Close' | t }}</md-button>
+            </md-dialog-actions>
+        </md-dialog>
+    {% endif %}

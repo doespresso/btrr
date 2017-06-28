@@ -1,0 +1,70 @@
+{% set cthemes =  craft.entries.section('themes') %}
+{#{% set header_script %}#}
+    <script>
+        window.themes = {
+            default: {
+                primary: {
+                    color: 'grey',
+                    hue: 500
+                },
+                accent: {
+                    color: 'blue',
+                    hue: 500
+                }
+            },
+            dgrey: {
+                primary: {
+                    color: 'grey',
+                    hue: 500
+                },
+                accent: {
+                    color: 'grey',
+                    hue: 400
+                },
+                warn: {
+                    color: 'grey',
+                    hue: 100
+                }
+            },
+            lgrey: {
+                primary: {
+                    color: 'grey',
+                    hue: 200
+                },
+                accent: {
+                    color: 'grey',
+                    hue: 100
+                },
+                warn: {
+                    color: 'grey',
+                    hue: 50
+                }
+            },
+            white: {
+                primary: {
+                    color: 'white',
+                    hue: 500
+                }
+            },
+            {% for t in cthemes %}
+            ct{{ t.id }}: {
+                primary: {
+                    {% if t.primaryColor|length %} color: '{{ t.primaryColor }}', {% endif %}
+                    {% if t.primaryColor|length %} hue: {{ t.primaryHue }} {% endif %}
+                },
+                accent: {
+                    {% if t.accentColor|length %} color: '{{ t.accentColor }}', {% endif %}
+                    {% if t.accentColor|length %} hue: {{ t.accentHue }} {% endif %}
+                },
+                warn: {
+                    {% if t.warnColor|length %} color: '{{ t.warnColor }}', {% endif %}
+                    {% if t.warnHue|length %} hue: {{ t.warnHue }} {% endif %}
+                },
+                background: "white"
+            },
+            {% endfor %}
+        };
+        window.theme = '{{ headerTheme }}';
+    </script>
+{#{% endset %}#}
+{#{% includeJs header_script %}#}

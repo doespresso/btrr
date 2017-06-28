@@ -1,0 +1,12 @@
+{% set images = block.blockContent %}
+{% set labels = block.blockLabels %}
+{% set backdrop = block.blockBackdrop %}
+
+{% if block.blockContent|length == 1 %}
+    {% set img = images[0] %}
+    {% include "images/_image.html" %}
+{% elseif block.blockContent > 1 %}
+    {% include "images/_swiper.html" %}
+{% else %}
+    {% set be = true %}
+{% endif %}

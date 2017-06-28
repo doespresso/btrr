@@ -1,0 +1,90 @@
+{#<!DOCTYPE html>#}
+{#<html>#}
+{#<head>#}
+    {#<meta charset="utf-8"/>#}
+    {#<title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title>#}
+    {#<link rel="home" href="{{ siteUrl }}"/>#}
+    {#{% include 'inc/_head' %}#}
+    {#{% block styles %}{% endblock %}#}
+    {#{% include 'inc/_meta' %}#}
+
+{#</head>#}
+{#<body>#}
+{#<div id="app">#}
+    {#{{ include ("inc/_sidenav_list-collapse.html") }}#}
+    {#<header>#}
+        {#<md-toolbar class="md-large md-primary">#}
+            {#<div class="md-toolbar-container">#}
+                {#<md-button class="md-icon-button" @click.native="toggleLeftSidenav">#}
+                    {#<md-icon>menu</md-icon>#}
+                {#</md-button>#}
+
+                {#<span style="flex: 1;"></span>#}
+
+                {#<md-button class="md-icon-button">#}
+                    {#<md-icon>search</md-icon>#}
+                {#</md-button>#}
+
+                {#<md-button class="md-icon-button">#}
+                    {#<md-icon>filter_list</md-icon>#}
+                {#</md-button>#}
+            {#</div>#}
+
+            {#<div class="md-toolbar-container">#}
+                {#<h2 class="md-title">{% if title is defined %}{{ title }}{% else %}{{ siteName }}{% endif %}</h2>#}
+            {#</div>#}
+
+        {#</md-toolbar>#}
+
+
+        {#<div class="breadcrumbs">breadcrumbs</div>#}
+        {#<h1>{{ "News" | translate }}</h1>#}
+        {#<hr/>#}
+
+        {#<h1 class="title--page">{{ pageTitle | default('var is not defined') }}</h1>#}
+
+
+        {#<div class="submenu">#}
+            {#{% if entry is defined %}#}
+                {#{% set currentCategoryIds = craft.categories.relatedTo(entry).ids() %}#}
+                {#{% set currentCategoryGroup = craft.categories.relatedTo(entry).first().getGroup() %}#}
+            {#{% elseif category is defined %}#}
+                {#{% set currentCategoryIds = [category.id] %}#}
+                {#{% set currentCategoryGroup = category.getGroup() %}#}
+            {#{% else %}#}
+                {#{% set currentCategoryIds = [] %}#}
+            {#{% endif %}#}
+
+            {#{% nav cat in craft.categories.group(currentCategoryGroup.handle) %}#}
+            {#{% set class = cat.id in currentCategoryIds ? 'active' : '' %}#}
+            {#&#123;&#35;{% set entryCount = craft.entries.relatedTo(cat).total() %}&#35;&#125;#}
+
+            {#<li><a href="{{ cat.url }}" class="{{ class }}">{{ cat.title }}</a></li>#}
+
+            {#{% endnav %}#}
+        {#</div>#}
+
+    {#</header>#}
+
+
+    {#<hr/>#}
+
+    {#<content>#}
+        {#{% block content %}#}
+        {#{% endblock %}#}
+    {#</content>#}
+
+
+    {#<hr/>#}
+
+    {#<div class="pager"></div>#}
+
+    {#<footer>#}
+        {#{% include 'inc/_footer' %}#}
+    {#</footer>#}
+
+
+{#</div>#}
+{#{% include 'inc/_scripts' %}#}
+{#</body>#}
+{#</html>#}

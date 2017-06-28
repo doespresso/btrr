@@ -1,0 +1,10 @@
+{% extends "_page.html" %}
+{% set persons = craft.entries.section('persons').relatedTo(category).with(['personPhoto','relatedServices','relatedBranches']).order('personLastname') %}
+
+{% block content %}
+    <section class="section">
+        <div class="ctr section-content">
+            {% include "persons/_list-cards.html" %}
+        </div>
+    </section>
+{% endblock %}

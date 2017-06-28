@@ -1,0 +1,67 @@
+@import "./../node_modules/vue-material/src/core/stylesheets/variables.scss";
+@import "./../node_modules/vue-material/src/core/stylesheets/mixins.scss";
+
+
+@import "transitions";
+@import "bti_colors";
+@import "grid/gridlex.scss";
+@import "paddings";
+@import "section";
+@import "blocks";
+@import "video";
+@import "height";
+@import "promo";
+@import "navbar";
+@import "sidebar";
+@import "card";
+@import "page";
+@import "titles";
+@import "lists";
+@import "text";
+@import "swiper";
+@import "quotes";
+@import "ani";
+@import "article";
+@import "feedback";
+@import "dialog";
+@import "nav-link";
+@import "infographic";
+@import "html-content";
+@import "chip";
+@import "collapse";
+@import "tabs";
+@import "header";
+@import "filter";
+@import "typo";
+@import "share";
+@import "svg";
+
+
+
+
+//@import "var";
+
+
+
+.swiper-slide{
+  *{box-sizing: border-box}
+}
+
+body{
+  position:relative;
+  background-color:#fafafa!important;
+}
+
+a{
+  color:inherit;
+  text-decoration: none;
+  &:hover,&:active,&:focus{
+    text-decoration: none;
+    opacity:1!important;
+  }
+}
+
+
+
+
+

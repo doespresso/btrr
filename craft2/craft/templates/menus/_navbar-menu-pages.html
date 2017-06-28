@@ -1,0 +1,48 @@
+{#{% cache globally %}#}
+{% set menu_items = craft.entries({
+section:"pages",
+mTop:1,
+level:1,
+with:["personStatus","publicationCategory"]
+}) %}
+
+
+
+{% import "menus/_macros-link.html" as link %}
+
+<nav class="nav-menu" role="navigation">
+    {% for item in menu_items %}
+        {% if item.children.total() == 0 and not item.mShowServices and not item.mShowBranches %}
+            {% if item.url %}
+                <a href="{{ link.url(item)|trim }}">{{ link.title(item)|trim }}</a>
+            {% endif %}
+        {% else %}
+            <md-menu md-size="auto" md-direction="bottom left" md-offset-y="60">
+                <a md-menu-trigger>{{ item.title }}</a>
+                <md-menu-content>
+                    {% for subitem in item.children %}
+                        {% if subitem.mTop %}
+                            <md-menu-item href="{{ link.url(subitem)|trim }}">{{ link.title(subitem)|trim }}</md-menu-item>
+                        {% endif %}
+                    {% endfor %}
+                    {% if item.mShowServices %}
+                        {% for subitem in allServices %}
+                            <md-menu-item href="{{ link.url(subitem)|trim }}">{{ link.title(subitem)|trim }}</md-menu-item>
+                        {% endfor %}
+                    {% endif %}
+                    {% if item.mShowBranches %}
+                        {% for subitem in allBranches %}
+                            <md-menu-item href="{{ link.url(subitem)|trim }}">{{ link.title(subitem)|trim }}</md-menu-item>
+                        {% endfor %}
+                    {% endif %}
+                </md-menu-content>
+            </md-menu>
+        {% endif %}
+    {% endfor %}
+</nav>
+{#{% endcache %}#}
+
+
+
+
+

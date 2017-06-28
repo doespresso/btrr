@@ -1,0 +1,22 @@
+<nav class="nav-list--inline socials">
+    {% if globalContacts.facebook %}
+        <a href="{{globalContacts.facebook}}" target="_blank">
+            <md-icon class="md-size-1x" md-src="{{ craft.config.environmentVariables.baseUrl }}assets/icons/facebook.svg"></md-icon>
+        </a>
+    {% endif %}
+    {% if globalContacts.twitter %}
+        <a href="{{globalContacts.twitter}}" target="_blank">
+            <md-icon class="md-size-1x" md-src="{{ craft.config.environmentVariables.baseUrl }}assets/icons/twitter.svg"></md-icon>
+        </a>
+    {% endif %}
+    {% if globalContacts.youtube %}
+        <a href="{{globalContacts.youtube}}" target="_blank">
+            <md-icon class="md-size-1x" md-src="{{ craft.config.environmentVariables.baseUrl }}assets/icons/youtube.svg"></md-icon>
+        </a>
+    {% endif %}
+    {% if globalContacts.linkedin %}
+        <a href="{{globalContacts.linkedin}}" target="_blank">
+            <md-icon class="md-size-1x" md-src="{{ craft.config.environmentVariables.baseUrl }}assets/icons/linkedin.svg"></md-icon>
+        </a>
+    {% endif %}
+</nav>

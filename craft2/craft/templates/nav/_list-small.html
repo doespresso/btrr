@@ -1,0 +1,26 @@
+{% set list_divider=true %}
+{% set list_classes='md-medium md-inline themed' %}
+{% import "menus/_macros-link.html" as link %}
+<md-list class="md-transparent {{ list_classes }} list--nav">
+    {% if sectionTitle is defined and sectionTitle|length %}
+        <md-subheader>{{ sectionTitle }}</md-subheader>
+    {% endif %}
+    {% for item in navs %}
+        {% if item.id != current.id or showCurrent %}
+            {% set href = link.url(item)|trim %}
+            <md-list-item href="{{ href }}">
+                {% if list_divider is defined  and list_divider == true %}
+                    <md-divider></md-divider>
+                {% endif %}
+                <div class="md-list-text-container">{{ item.title }}</div>
+                {% if item.url is defined %}
+                    <md-button class="md-icon-button md-list-action">
+                        <md-icon>chevron_right</md-icon>
+                    </md-button>
+                {% endif %}
+            </md-list-item>
+        {% endif %}
+    {% endfor %}
+</md-list>
+
+

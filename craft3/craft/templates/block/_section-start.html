@@ -1,0 +1,15 @@
+<section class="section {{ bPadding }} {{ bMargin }} {{ bTheme }}">
+    <div class="block-icon icon--mono">{{ bIcon? bIcon.inline }}</div>
+    {% if bTitle %}
+        <md-layout class="md-container md-centered" md-gutter="40">
+            <md-layout>
+                <div class="wrapper t-color">
+                    <div class="md-title section-title">{{ bTitle }}</div>
+                </div>
+            </md-layout>
+        </md-layout>
+    {% endif %}
+    {% if bContainer == 1%}
+        <md-layout class="md-container md-centered" md-gutter="40">
+            {#{{ lgut }}#}
+    {% endif %}

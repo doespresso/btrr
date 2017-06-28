@@ -1,0 +1,11 @@
+{% if currentType == 'groupPublications' %}
+    {% set hideDate = current.blockHideDate %}
+    {% set hideShort = current.blockHideShort %}
+{% endif %}
+<div class="ctr section-content">
+    <div class="grid-equalHeight cards news--cards">
+        {% for item in news %}
+            {% include "publications/_card.html" %}
+        {% endfor %}
+    </div>
+</div>

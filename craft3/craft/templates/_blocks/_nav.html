@@ -1,0 +1,52 @@
+{% if block['isSwiper'] is defined and block.isSwiper == 1 %}
+    {% set classes = ' swiper--cards ' %}
+    {% set arrows = 1 %}
+    {% set centered = 1 %}
+    {% set loop = 'false' %}
+    {% set swiperData = navs %}
+
+    {#{% set menu_items = craft.entries({#}
+    {#section:"pages",#}
+    {#mTop:1,#}
+    {#level:1,#}
+    {#with:["personStatus","publicationCategory"]#}
+    {#}) %}#}
+
+
+
+    {#{% import "menus/_macros-link.html" as link %}#}
+
+    {% set cardTemplate = 'nav/_card.html' %}
+    {% set spb ="
+            spaceBetween: 0,
+            slidesPerView: 4,
+            slidesPerGroup:4,
+            centeredSlides:false,
+            breakpoints: {
+            640: {
+            slidesPerView: 1,
+            slidesPerGroup:1,
+            },
+            840: {
+            slidesPerView: 2,
+            slidesPerGroup:2,
+            },
+            1300: {
+            slidesPerView: 3,
+            slidesPerGroup:3,
+            },
+            1600: {
+            slidesPerView: 4,
+            slidesPerGroup:4,
+            },
+            1800: {
+            slidesPerView: 5,
+            slidesPerGroup:5,
+            }
+            }" %}
+    {% set cardTemplate = 'nav/_card.html' %}
+    {% include "_swiper/_swiper.html" %}
+{% else %}
+    {% set templ = "nav/" ~ tmpl %}
+    {% include templ %}
+{% endif %}

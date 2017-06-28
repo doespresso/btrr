@@ -1,0 +1,38 @@
+{% if block['isSwiper'] is defined and block.isSwiper == 1 and not intabs %}
+
+        {% set classes = ' swiper--cards ' %}
+        {% set arrows = 1 %}
+        {% set loop = 'false' %}
+        {#{% set swiperData = docs %}#}
+        {% set cardTemplate = 'docs/_card.html' %}
+        {% set spb ="
+            spaceBetween: 0,
+            slidesPerView: 3,
+            slidesPerGroup:3,
+            centeredSlides:false,
+            breakpoints: {
+            640: {
+            slidesPerView: 1,
+            slidesPerGroup:1,
+            },
+            840: {
+            slidesPerView: 2,
+            slidesPerGroup:2,
+            },
+            1300: {
+            slidesPerView: 3,
+            slidesPerGroup:3,
+            },
+            }"
+        %}
+        {% set swiperData = persons %}
+        {% set cardTemplate = 'persons/_card.html' %}
+
+        {% include "_swiper/_swiper.html" %}
+
+    {% else %}
+        {% set tmpl = '_list-cards.html' %}
+        {% set templ = "persons/" ~ tmpl %}
+        {% include templ %}
+    {% endif %}
+

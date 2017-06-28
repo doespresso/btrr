@@ -1,0 +1,14 @@
+
+{% set persons = craft.entries({'section':'persons','notInTeam':'not 1','with':['personStatus','relatedServices','relatedBranches']}).order('personLastname') %}
+
+
+{% block content %}
+    {% cache %}
+    {% include "_filter/_filter.html" %}
+    <section class="section">
+        <div class="ctr section-content filtered">
+            {% include "persons/_list-cards.html" %}
+        </div>
+    </section>
+    {% endcache %}
+{% endblock %}

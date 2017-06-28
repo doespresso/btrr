@@ -1,0 +1,10 @@
+{% macro url(page) %}
+    {% if page.type == 'typePagePersons' %}{{ page.personStatus is defined ? page.personStatus[0].url : ''}}
+    {% elseif page.type == 'typePagePublications' %}{{ page.publicationCategory is defined ? page.publicationCategory[0].url: '' }}
+    {% elseif page.type == 'typePageLink' %}{{ page.mUrl is defined ? page.mUrl : ''}}
+    {% else %}{{ page.url is defined ? page.url : ''}}{% endif %}
+{% endmacro %}
+
+{% macro title(page) %}
+    {% if page.mTitle %}{{ page.mTitle }}{% else %}{{ page.title }}{% endif %}
+{% endmacro %}

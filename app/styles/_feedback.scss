@@ -1,0 +1,9 @@
+.md-sidenav-big {
+  &.md-sidenav {
+    @include layout-medium-and-up {
+      .md-sidenav-content {
+        width: 640px;
+      }
+    }
+  }
+}

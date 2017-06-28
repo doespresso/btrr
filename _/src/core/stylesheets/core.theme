@@ -1,0 +1,98 @@
+.THEME_NAME {
+  :not(input):not(textarea)::selection {
+    background: #{'ACCENT-COLOR'};
+    color: #{'ACCENT-CONTRAST'};
+  }
+
+  a:not(.md-button) {
+    color: #{'ACCENT-COLOR'};
+
+    &:hover {
+      color: #{'ACCENT-COLOR-800'};
+    }
+  }
+}
+
+body.THEME_NAME {
+  /* background-color: #{'BACKGROUND-COLOR'}; */
+  background-color: #{'BACKGROUND-COLOR'};
+  color: #{'BACKGROUND-CONTRAST-0.87'};
+}
+
+/* Typography */
+
+.THEME_NAME {
+  .md-caption,
+  .md-display-1,
+  .md-display-2,
+  .md-display-3,
+  .md-display-4 {
+     /* color: #{'BACKGROUND-CONTRAST-0.77'}; */
+  }
+
+  code:not(.hljs) {
+    background-color: #{'ACCENT-COLOR-A100-0.2'};
+    color: #{'ACCENT-COLOR-800'};
+  }
+}
+
+
+.THEME_NAME {
+    .primary-bg{
+        background-color: #{'PRIMARY-COLOR'};
+        color: #{'PRIMARY-CONTRAST-0.97'};
+        .promo-icon svg *{stroke:#{'PRIMARY-CONTRAST-0.99'}!important}
+        .promo-icon svg{opacity:0.3}
+    }
+    &.block{
+        background-color:#{'PRIMARY-COLOR'};
+        color:#{'PRIMARY-CONTRAST-0.999'};
+    }
+    .header-title{
+        color:#{'PRIMARY-CONTRAST-0.999'};
+    }
+    &.section{
+            background-color:#{'PRIMARY-COLOR'};
+            .t-color{color:#{'PRIMARY-CONTRAST-0.999'};}
+        }
+    .block-icon:not(.icon--mono){
+        svg *{
+                  stroke: #{'ACCENT-COLOR'}!important;
+
+        }
+
+        &.icon-color--ht{
+                         svg *{
+                                   stroke: #{'PRIMARY-CONTRAST-0.999'}!important;
+
+                         }
+        }
+        &.icon-color--2c{
+             svg *{
+              &:nth-child(even){
+                      stroke: #{'ACCENT-COLOR'}!important;
+                    }
+              &:nth-child(odd){
+                       stroke: #{'WARN-COLOR'}!important;
+                    }
+             }
+        }
+   }
+
+   .bg-md-primary, .md-card.bg-md-primary{
+     //background-color:#{'PRIMARY-COLOR'};
+       // color: #{'PRIMARY-CONTRAST-0.87'};
+   }
+
+   .bg-md-accent{
+        background-color:#{'PRIMARY-ACCENT'};
+      }
+
+      .md-toolbar{
+      .nav-menu{
+            a,a:hover,.md-menu-trigger{
+              color:#{'PRIMARY-CONTRAST-0.99'};
+            }
+         }
+      }
+}

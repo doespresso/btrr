@@ -1,0 +1,55 @@
+{% if block['isSwiper'] is defined and block.isSwiper == 1%}
+{#{% if block['isSwiper'] is defined and block.isSwiper == 1 and false%}#}
+    {% set classes = 'swiper--infogs title-size-' ~ '1' ~ ' icons-' ~ 1 ~ ' icon-size-' ~ 1 ~ ' i-center-' ~ 1 %}
+    {% set arrows = 0 %}
+    {% set centered = 1 %}
+    {% set pagination = true %}
+    {% set loop = 'false' %}
+    {% set swiperData = infogs %}
+    {% set showActions = true %}
+    {% set cardTemplate = 'infogs/_item.html' %}
+    {% set spb ="
+            slidesOffsetBefore:0,
+            spaceBetween: 0,
+            slidesPerView: 3,
+            slidesPerGroup:1,
+            loop:true,
+            autoplay:5000,
+
+            centeredSlides:false,
+            speed: 800,
+            breakpoints: {
+            640: {
+            slidesOffsetBefore:0,
+            speed: 400,
+            slidesPerView: 1,
+            slidesPerGroup:1,
+            },
+            1200: {
+            speed: 1600,
+            slidesPerView: 2,
+            slidesPerGroup:1,
+            },
+            1400: {
+            speed: 700,
+            slidesPerView: 3,
+            slidesPerGroup:1,
+            },
+            1600: {
+            speed: 800,
+            slidesPerView: 3,
+            slidesPerGroup:1,
+            },
+            1800: {
+            speed: 800,
+            slidesPerView: 3,
+            slidesPerGroup:1,
+            }
+            }" %}
+    {% include "_swiper/_swiper.html" %}
+{% else %}
+    {% set showActions = true %}
+    {% set templ = "infogs/_grid.html" %}
+    {% include templ %}
+{% endif %}
+

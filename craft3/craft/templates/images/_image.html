@@ -1,0 +1,3 @@
+<div class="block image {{ backdrop == 1 ? 'backdrop-'~backdrop }}" style="background-image:url({{ img.getUrl('resizeBig') }})">
+        {% if labels %}<div class="img-label">{{ img.title }}</div>{% endif %}
+</div>

@@ -1,0 +1,35 @@
+<md-layout class="md-gutter">
+    <md-layout md-flex-xsmall="100" md-flex-small="50" md-flex-medium="33">
+        <md-input-container>
+            <label for="movie">{{ 'Service' | translate }}</label>
+            <md-select name="movie" id="movie" v-model="movie">
+                <md-option value="fight_club">Аудиторские услуги</md-option>
+                <md-option value="godfather">Godfather</md-option>
+                <md-option value="godfather_ii">Godfather II</md-option>
+                <md-option value="godfather_iii">Godfather III</md-option>
+                <md-option value="godfellas">Godfellas</md-option>
+                <md-option value="pulp_fiction">Pulp Fiction</md-option>
+                <md-option value="scarface">Scarface</md-option>
+            </md-select>
+        </md-input-container>
+    </md-layout>
+    <md-layout md-flex-xsmall="100" md-flex-small="50" md-flex-medium="33">
+        <md-input-container>
+            <label for="movie">{{ 'Branch' | translate }}</label>
+            <md-select name="movie" id="movie" v-model="movie">
+                <md-option value="fight_club">Аудиторские услуги</md-option>
+                <md-option value="godfather">Godfather</md-option>
+                <md-option value="godfather_ii">Godfather II</md-option>
+                <md-option value="godfather_iii">Godfather III</md-option>
+                <md-option value="godfellas">Godfellas</md-option>
+                <md-option value="pulp_fiction">Pulp Fiction</md-option>
+                <md-option value="scarface">Scarface</md-option>
+            </md-select>
+        </md-input-container>
+    </md-layout>
+    <md-layout md-align="end">
+        <div>
+            <md-button class="md-primary md-raised">{{ 'Select team' | translate }}</md-button>
+        </div>
+    </md-layout>
+</md-layout>

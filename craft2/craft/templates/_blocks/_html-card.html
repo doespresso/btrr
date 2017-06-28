@@ -1,0 +1,29 @@
+{% if block.blockContent or block.blockTitle %}
+    <div class="ctr">
+        <md-card class="html-card">
+        <md-card-area>
+            <md-card-header>
+                {% if bTitle is not empty %}
+                    <div class="md-title">{{ bTitle }}</div>{% endif %}
+                {% if block.blockShort is not empty %}
+                    <div class="md-subhead">{{ block.blockShort }}</div>{% endif %}
+            </md-card-header>
+            <hr class="line"/>
+            <md-card-content>
+                <div class="html-content">{{ block.blockContent }}</div>
+            </md-card-content>
+            </md-card-area>
+            {% if bLink|length or bRequest == 1 %}
+                <md-card-actions>
+                    {% for item in bLink %}
+                        <md-button href="{{ item.url }}">{{ item.title }}</md-button>
+                    {% endfor %}
+                    {% if bRequest == 1 %}
+                        {% include 'inc/_request-button-card.html' %}
+                    {% endif %}
+                    <span class="md-flex"></span>
+                </md-card-actions>
+            {% endif %}
+        </md-card>
+    </div>
+{% endif %}
